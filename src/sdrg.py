@@ -12,7 +12,7 @@ from datetime import datetime
 from structures.graph import Graph
 from structures.graph import build_graph
 from structures.graph_decimate import decimate
-from structures.graph_decimate import smart_search
+from structures.graph_decimate import filter_bond 
 from structures.graph_decimate import search
 from structures.graph_decimate import in_range
 from structures.graph_decimate import repair
@@ -211,7 +211,7 @@ def run_fast_sdrg(n=1, neg_x_lim=0, x_lim=5000, neg_y_lim=0, y_lim=5000, random=
 
     iteration = 1
     
-    curr = smart_search(g)
+    curr = search(g)
 
     step_plot_dir = os.path.join(output_dir, "steps")
     stat_output_dir = os.path.join(output_dir, "percolation")
@@ -246,7 +246,7 @@ def run_fast_sdrg(n=1, neg_x_lim=0, x_lim=5000, neg_y_lim=0, y_lim=5000, random=
 
         iteration += 1
 
-        curr = smart_search(g)
+        curr =search(g)
 
         if percolation_stats == True:
             group_sizes = [len(members) for members in g.group_ids.values()]
@@ -299,8 +299,6 @@ def run_fast_sdrg(n=1, neg_x_lim=0, x_lim=5000, neg_y_lim=0, y_lim=5000, random=
         f.write(f"Done at iteration {iteration}, plots saved to '{output_dir}/'\n")
 
     return g
-
-
 
 
 

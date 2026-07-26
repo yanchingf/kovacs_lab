@@ -7,7 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from collections import Counter
 from data_handling.star_io import get_all_star_data, get_patch, get_coords_and_brightness
-
+from datetime import datetime
 from sdrg import run_sdrg
 
 from stars import plot_star_map
@@ -15,11 +15,11 @@ from stars import final_visualization
 
 data = get_all_star_data()
 
-c_lower_lim = 3
+c_lower_lim = 2
 c_upper_lim = 3
 c_range = list(range(c_lower_lim, c_upper_lim + 1))
 
-patch_names = ["Cnc"]
+patch_names = ["Cnc", "UMa"]
 
 output_dir = os.path.join(os.path.dirname(__file__), 'tests', 'runs')
 os.makedirs(output_dir, exist_ok=True)
@@ -34,7 +34,7 @@ for patch_name in patch_names:
     else:
         print(f"{patch_name}: {len(patch_df)} stars found")
 
-    patch_dir = os.path.join(output_dir, patch_name)
+    patch_dir = os.path.join(output_dir, patch_name, datetime.now().strftime("%Y%m%d_%H%M%S"))
     os.makedirs(patch_dir, exist_ok=True)
 
     num_clusters_by_c = []
