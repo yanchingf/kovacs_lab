@@ -48,7 +48,7 @@ def search(graph):
 def filter_bond(graph, k ,neighbors=None):  # k is about to be decimated
 
     if neighbors is None:
-        neighbors = [v.id for v in graph.nodes if v.active == True and graph.adj[v][k] > 0] # 
+        neighbors = [v.id for v in graph.nodes.values() if v.active == True and graph.adj[v.id][k] > 0] # 
 
     l = len(neighbors)
 
@@ -59,18 +59,29 @@ def filter_bond(graph, k ,neighbors=None):  # k is about to be decimated
 
     for i in range(l-1):
         for j in range(i+1, l):
+
             ni = neighbors[i]
             nj = neighbors[j]
-            if (graph.adj[k][ni] > graph.adj[ni][nj] and graph.adj[k][nj] > graph.adj[ni][nj]):
-                new_bond = graph.adj[ni][k] + graph.adj[nj][k] - graph.nodes[k].range
-                if (new_bond > graph.adj[ni][nj]):
-                    graph.adj[ni][nj] = 0
+
+            if graph.adj[ni][nj] <= 0:
+                continue
+
+            kappa_ij = np.log(graph.adj[ni][nj])
+            kappa_ik = np.log(graph.adj[k][ni])
+            kappa_jk = np.log(graph.adj[k][nj])
+            theta_k = np.log(graph.nodes[k].range)
+
+            if kappa_ik > kappa_ij and kappa_jk > kappa_ij:
+                new_kappa = kappa_ik + kappa_jk - theta_k
+                if new_kappa > kappa_ij:
+                    graph.adj[ni][nj] = -1
+                    graph.adj[nj][ni] = -1
                     c += 1
 
     return c
 
 
-def decimate(graph, obj):  # decimate node / edge
+def decimate(graph, obj, filter=False):  # decimate node / edge
 
     updated = []
 
@@ -81,9 +92,6 @@ def decimate(graph, obj):  # decimate node / edge
 
         neighbors = [v for v in range(graph.length) if (graph.adj[node_id][v] > 0 
                      and graph.nodes[v].active) and in_range(graph, node_id, v)]
-
-        c = filter_bond(graph, node_id, neighbors=neighbors)
-        print(f"Filtered {c} bonds decimating node {node_id}")
 
         r = len(neighbors)
 
@@ -131,7 +139,7 @@ def decimate(graph, obj):  # decimate node / edge
 
             if not (k == u.id or k == v_id):
 
-                best = min(graph.adj[u.id][k], graph.adj[v_id][k])
+                best = max(graph.adj[u.id][k], graph.adj[v_id][k])
                 graph.adj[u.id][k] = best
                 graph.adj[k][u.id] = best
 
@@ -142,6 +150,11 @@ def decimate(graph, obj):  # decimate node / edge
             if vv.cluster_id == u.cluster_id and vv.active:
                 vv.range = new_traverse
                 updated.append(vv.id)
+
+        if filter == True:
+            c = filter_bond(graph, u.id)
+            print(f"Filtered {c} bonds merging into node {u.id}")
+
 
         graph.set_node_status(v_id, False)
         for k in range(graph.length):

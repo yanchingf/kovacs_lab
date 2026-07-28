@@ -1,0 +1,130 @@
+[
+  {
+    "patch": "Cnc",
+    "c": 2,
+    "n_stars": 112,
+    "variant": "unfiltered",
+    "filter_bonds": false,
+    "elapsed_sec": 362.8668508999981,
+    "num_clusters": 92,
+    "max_cluster_size": 4,
+    "cluster_size_dist": {
+      "2": 10,
+      "1": 78,
+      "3": 2,
+      "4": 2
+    }
+  },
+  {
+    "patch": "Cnc",
+    "c": 2,
+    "n_stars": 112,
+    "variant": "filtered",
+    "filter_bonds": true,
+    "elapsed_sec": 255.39534509996884,
+    "num_clusters": 111,
+    "max_cluster_size": 2,
+    "cluster_size_dist": {
+      "2": 1,
+      "1": 110
+    }
+  },
+  {
+    "patch": "Cnc",
+    "c": 3,
+    "n_stars": 112,
+    "variant": "unfiltered",
+    "filter_bonds": false,
+    "elapsed_sec": 329.49245700007305,
+    "num_clusters": 79,
+    "max_cluster_size": 7,
+    "cluster_size_dist": {
+      "4": 4,
+      "2": 13,
+      "1": 60,
+      "3": 1,
+      "7": 1
+    }
+  },
+  {
+    "patch": "Cnc",
+    "c": 3,
+    "n_stars": 112,
+    "variant": "filtered",
+    "filter_bonds": true,
+    "elapsed_sec": 254.81857530004345,
+    "num_clusters": 109,
+    "max_cluster_size": 4,
+    "cluster_size_dist": {
+      "4": 1,
+      "1": 108
+    }
+  },
+  {
+    "patch": "Cnc",
+    "c": 4,
+    "n_stars": 112,
+    "variant": "unfiltered",
+    "filter_bonds": false,
+    "elapsed_sec": 326.781773100025,
+    "num_clusters": 74,
+    "max_cluster_size": 10,
+    "cluster_size_dist": {
+      "1": 58,
+      "2": 8,
+      "3": 4,
+      "10": 1,
+      "5": 1,
+      "7": 1,
+      "4": 1
+    }
+  },
+  {
+    "patch": "Cnc",
+    "c": 4,
+    "n_stars": 112,
+    "variant": "filtered",
+    "filter_bonds": true,
+    "elapsed_sec": 258.95393309998326,
+    "num_clusters": 108,
+    "max_cluster_size": 5,
+    "cluster_size_dist": {
+      "5": 1,
+      "1": 107
+    }
+  },
+  {
+    "patch": "Cnc",
+    "c": 5,
+    "n_stars": 112,
+    "variant": "unfiltered",
+    "filter_bonds": false,
+    "elapsed_sec": 405.5759464999428,
+    "num_clusters": 64,
+    "max_cluster_size": 16,
+    "cluster_size_dist": {
+      "1": 49,
+      "5": 1,
+      "2": 7,
+      "16": 1,
+      "4": 2,
+      "6": 1,
+      "8": 1,
+      "3": 2
+    }
+  },
+  {
+    "patch": "Cnc",
+    "c": 5,
+    "n_stars": 112,
+    "variant": "filtered",
+    "filter_bonds": true,
+    "elapsed_sec": 308.85693399992306,
+    "num_clusters": 106,
+    "max_cluster_size": 7,
+    "cluster_size_dist": {
+      "1": 105,
+      "7": 1
+    }
+  }
+]

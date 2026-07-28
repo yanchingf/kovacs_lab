@@ -19,7 +19,7 @@ c_lower_lim = 2
 c_upper_lim = 3
 c_range = list(range(c_lower_lim, c_upper_lim + 1))
 
-patch_names = ["Cnc", "UMa"]
+patch_names = ["Cnc"]
 
 output_dir = os.path.join(os.path.dirname(__file__), 'tests', 'runs')
 os.makedirs(output_dir, exist_ok=True)

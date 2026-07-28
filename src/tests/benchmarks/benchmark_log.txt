@@ -1,0 +1,32 @@
+[2026-07-27T00:39:35] === Benchmark run started ===
+[2026-07-27T00:39:35] c_range=[2, 3, 4, 5], patches=['Cnc'], variants=['unfiltered', 'filtered']
+[2026-07-27T00:39:35] Cnc: 112 stars found
+[2026-07-27T00:39:35] Running Cnc : c=2 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-27T00:45:37]   -> 362.867s, 92 clusters, max size 4
+[2026-07-27T00:45:37] Running Cnc : c=2 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-27T00:49:53]   -> 255.395s, 111 clusters, max size 2
+[2026-07-27T00:49:53] Running Cnc : c=3 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-27T00:55:22]   -> 329.492s, 79 clusters, max size 7
+[2026-07-27T00:55:22] Running Cnc : c=3 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-27T00:59:37]   -> 254.819s, 109 clusters, max size 4
+[2026-07-27T00:59:37] Running Cnc : c=4 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-27T01:05:04]   -> 326.782s, 74 clusters, max size 10
+[2026-07-27T01:05:04] Running Cnc : c=4 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-27T01:09:23]   -> 258.954s, 108 clusters, max size 5
+[2026-07-27T01:09:23] Running Cnc : c=5 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-27T01:16:09]   -> 405.576s, 64 clusters, max size 16
+[2026-07-27T01:16:09] Running Cnc : c=5 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-27T01:21:17]   -> 308.857s, 106 clusters, max size 7
+[2026-07-27T01:21:17] WARNING: Cnc c=2 — filtered and unfiltered runs disagree on final cluster structure (92 vs 111 clusters, max size 4 vs 2)
+[2026-07-27T01:21:17] WARNING: Cnc c=3 — filtered and unfiltered runs disagree on final cluster structure (79 vs 109 clusters, max size 7 vs 4)
+[2026-07-27T01:21:17] WARNING: Cnc c=4 — filtered and unfiltered runs disagree on final cluster structure (74 vs 108 clusters, max size 10 vs 5)
+[2026-07-27T01:21:17] WARNING: Cnc c=5 — filtered and unfiltered runs disagree on final cluster structure (64 vs 106 clusters, max size 16 vs 7)
+[2026-07-27T01:21:17] Cnc timing summary:
+  c=2: unfiltered=362.867s, filtered=255.395s, speedup=1.42x
+  c=3: unfiltered=329.492s, filtered=254.819s, speedup=1.29x
+  c=4: unfiltered=326.782s, filtered=258.954s, speedup=1.26x
+  c=5: unfiltered=405.576s, filtered=308.857s, speedup=1.31x
+[2026-07-27T01:21:18] Done: Cnc (4 c-values x 2 variants)
+[2026-07-27T01:21:18] All benchmark results written to c:\Users\milan\Desktop\SURG_2026\src\tests\benchmarks\results.json
+[2026-07-27T01:21:18] === Benchmark run finished ===
+
