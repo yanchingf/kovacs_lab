@@ -1,0 +1,51 @@
+c_range=[1, 2, 3, 4, 5], patches=['Cnc'], variants=['unfiltered', 'filtered']
+Cnc: 112 stars found
+Running Cnc : c=1 : variant=unfiltered (filter_bonds=False) : n=112
+  -> 52.537s, 104 clusters, max size 3
+Running Cnc : c=1 : variant=filtered (filter_bonds=True) : n=112
+Filtered 1282 bonds merging into node 18
+Filtered 0 bonds merging into node 18
+  -> 41.585s, 110 clusters, max size 3
+Running Cnc : c=2 : variant=unfiltered (filter_bonds=False) : n=112
+  -> 41.677s, 92 clusters, max size 4
+Running Cnc : c=2 : variant=filtered (filter_bonds=True) : n=112
+Filtered 2229 bonds merging into node 0
+  -> 32.766s, 111 clusters, max size 2
+Running Cnc : c=3 : variant=unfiltered (filter_bonds=False) : n=112
+  -> 40.546s, 79 clusters, max size 7
+Running Cnc : c=3 : variant=filtered (filter_bonds=True) : n=112
+Filtered 2228 bonds merging into node 0
+Filtered 13 bonds merging into node 0
+Filtered 0 bonds merging into node 0
+  -> 33.921s, 109 clusters, max size 4
+Running Cnc : c=4 : variant=unfiltered (filter_bonds=False) : n=112
+  -> 42.787s, 74 clusters, max size 10
+Running Cnc : c=4 : variant=filtered (filter_bonds=True) : n=112
+Filtered 2227 bonds merging into node 0
+Filtered 8 bonds merging into node 0
+Filtered 0 bonds merging into node 0
+Filtered 126 bonds merging into node 0
+  -> 32.449s, 108 clusters, max size 5
+Running Cnc : c=5 : variant=unfiltered (filter_bonds=False) : n=112
+  -> 40.528s, 64 clusters, max size 16
+Running Cnc : c=5 : variant=filtered (filter_bonds=True) : n=112
+Filtered 2214 bonds merging into node 0
+Filtered 7 bonds merging into node 0
+Filtered 0 bonds merging into node 0
+Filtered 107 bonds merging into node 0
+Filtered 239 bonds merging into node 28
+Filtered 2 bonds merging into node 28
+  -> 36.274s, 106 clusters, max size 7
+WARNING: Cnc c=1 — filtered and unfiltered runs disagree on final cluster structure (104 vs 110 clusters, max size 3 vs 3)
+WARNING: Cnc c=2 — filtered and unfiltered runs disagree on final cluster structure (92 vs 111 clusters, max size 4 vs 2)
+WARNING: Cnc c=3 — filtered and unfiltered runs disagree on final cluster structure (79 vs 109 clusters, max size 7 vs 4)
+WARNING: Cnc c=4 — filtered and unfiltered runs disagree on final cluster structure (74 vs 108 clusters, max size 10 vs 5)
+WARNING: Cnc c=5 — filtered and unfiltered runs disagree on final cluster structure (64 vs 106 clusters, max size 16 vs 7)
+Cnc timing summary:
+  c=1: unfiltered=52.537s, filtered=41.585s, speedup=1.26x
+  c=2: unfiltered=41.677s, filtered=32.766s, speedup=1.27x
+  c=3: unfiltered=40.546s, filtered=33.921s, speedup=1.20x
+  c=4: unfiltered=42.787s, filtered=32.449s, speedup=1.32x
+  c=5: unfiltered=40.528s, filtered=36.274s, speedup=1.12x
+Done: Cnc (5 c-values x 2 variants)
+All benchmark results written to c:\Users\milan\Desktop\SURG_2026\src\tests\benchmarks\results.json

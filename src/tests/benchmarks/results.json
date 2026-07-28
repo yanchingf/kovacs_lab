@@ -1,11 +1,40 @@
 [
   {
     "patch": "Cnc",
+    "c": 1,
+    "n_stars": 112,
+    "variant": "unfiltered",
+    "filter_bonds": false,
+    "elapsed_sec": 52.53667669999413,
+    "num_clusters": 104,
+    "max_cluster_size": 3,
+    "cluster_size_dist": {
+      "1": 97,
+      "3": 1,
+      "2": 6
+    }
+  },
+  {
+    "patch": "Cnc",
+    "c": 1,
+    "n_stars": 112,
+    "variant": "filtered",
+    "filter_bonds": true,
+    "elapsed_sec": 41.58535099995788,
+    "num_clusters": 110,
+    "max_cluster_size": 3,
+    "cluster_size_dist": {
+      "1": 109,
+      "3": 1
+    }
+  },
+  {
+    "patch": "Cnc",
     "c": 2,
     "n_stars": 112,
     "variant": "unfiltered",
     "filter_bonds": false,
-    "elapsed_sec": 362.8668508999981,
+    "elapsed_sec": 41.676585700013675,
     "num_clusters": 92,
     "max_cluster_size": 4,
     "cluster_size_dist": {
@@ -21,7 +50,7 @@
     "n_stars": 112,
     "variant": "filtered",
     "filter_bonds": true,
-    "elapsed_sec": 255.39534509996884,
+    "elapsed_sec": 32.7660496000899,
     "num_clusters": 111,
     "max_cluster_size": 2,
     "cluster_size_dist": {
@@ -35,7 +64,7 @@
     "n_stars": 112,
     "variant": "unfiltered",
     "filter_bonds": false,
-    "elapsed_sec": 329.49245700007305,
+    "elapsed_sec": 40.54594320000615,
     "num_clusters": 79,
     "max_cluster_size": 7,
     "cluster_size_dist": {
@@ -52,7 +81,7 @@
     "n_stars": 112,
     "variant": "filtered",
     "filter_bonds": true,
-    "elapsed_sec": 254.81857530004345,
+    "elapsed_sec": 33.920975400018506,
     "num_clusters": 109,
     "max_cluster_size": 4,
     "cluster_size_dist": {
@@ -66,7 +95,7 @@
     "n_stars": 112,
     "variant": "unfiltered",
     "filter_bonds": false,
-    "elapsed_sec": 326.781773100025,
+    "elapsed_sec": 42.78689330001362,
     "num_clusters": 74,
     "max_cluster_size": 10,
     "cluster_size_dist": {
@@ -85,7 +114,7 @@
     "n_stars": 112,
     "variant": "filtered",
     "filter_bonds": true,
-    "elapsed_sec": 258.95393309998326,
+    "elapsed_sec": 32.44882140005939,
     "num_clusters": 108,
     "max_cluster_size": 5,
     "cluster_size_dist": {
@@ -99,7 +128,7 @@
     "n_stars": 112,
     "variant": "unfiltered",
     "filter_bonds": false,
-    "elapsed_sec": 405.5759464999428,
+    "elapsed_sec": 40.52755319990683,
     "num_clusters": 64,
     "max_cluster_size": 16,
     "cluster_size_dist": {
@@ -119,7 +148,7 @@
     "n_stars": 112,
     "variant": "filtered",
     "filter_bonds": true,
-    "elapsed_sec": 308.85693399992306,
+    "elapsed_sec": 36.27358160004951,
     "num_clusters": 106,
     "max_cluster_size": 7,
     "cluster_size_dist": {

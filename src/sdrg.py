@@ -103,13 +103,11 @@ def run_sdrg(n=1, neg_x_lim=0, x_lim=5000, neg_y_lim=0, y_lim=5000, random=True,
     os.makedirs(step_plot_dir, exist_ok=True)
     os.makedirs(stat_output_dir, exist_ok=True)
 
-    final_iteration = iteration + 1
-
     if skycoords is None:
-        plot_graph(g, points, n, iteration=final_iteration, neg_x_lim=neg_x_lim, x_lim=x_lim, 
+        plot_graph(g, points, n, iteration=0, neg_x_lim=neg_x_lim, x_lim=x_lim, 
                neg_y_lim=neg_y_lim, y_lim=y_lim, output_dir=step_plot_dir) 
     else: 
-        plot_star_map(skycoords, g, iteration=final_iteration, output_dir=step_plot_dir, patch_name=patch_name) 
+        plot_star_map(skycoords, g, iteration=0, output_dir=step_plot_dir, patch_name=patch_name) 
 
     with open(txt_f, "a", encoding="utf-8") as f:
         f.write(f"Step 0 | Ω=initial\n")
@@ -117,7 +115,7 @@ def run_sdrg(n=1, neg_x_lim=0, x_lim=5000, neg_y_lim=0, y_lim=5000, random=True,
             f.write(f"    id={g.nodes[i].id} h={g.nodes[i].range} "
                     f"cluster={g.nodes[i].cluster_id} active={g.nodes[i].active}\n")
             
-    n_clusters, max_sizes, size_distro= [], [], []
+    n_clusters, max_sizes, size_distro, filtered_counts = [], [], [], []
 
     while curr[0] != None:
 
@@ -127,17 +125,21 @@ def run_sdrg(n=1, neg_x_lim=0, x_lim=5000, neg_y_lim=0, y_lim=5000, random=True,
                 f.write(f"    id={g.nodes[i].id} h={g.nodes[i].range} cluster={g.nodes[i].cluster_id} active={g.nodes[i].active}\n")
 
         if filter_bonds == True:
-            decimate(g, curr, filter=True)
+            total = decimate(g, curr, filter=True)
+            with open(txt_f, "a", encoding="utf-8") as f:
+                        f.write(f"    filtered {total} bonds this step\n")
+            filtered_counts.append(total)
         else: 
             decimate(g, curr, filter=False)
 
         to_plot = ((iteration % plot_every) == 0)
 
-        if skycoords is None and to_plot == True: 
-            plot_graph(g, points, n, iteration, neg_x_lim=neg_x_lim, x_lim=x_lim,
-            neg_y_lim=neg_y_lim, y_lim=y_lim, output_dir=step_plot_dir)
-        else: 
-            plot_star_map(skycoords, g, iteration=iteration, output_dir=step_plot_dir, patch_name=patch_name) 
+        if to_plot:
+            if skycoords is None:
+                plot_graph(g, points, n, iteration, neg_x_lim=neg_x_lim, x_lim=x_lim,
+                           neg_y_lim=neg_y_lim, y_lim=y_lim, output_dir=step_plot_dir)
+            else:
+                plot_star_map(skycoords, g, iteration=iteration, output_dir=step_plot_dir, patch_name=patch_name)
 
         iteration += 1
 
@@ -150,12 +152,12 @@ def run_sdrg(n=1, neg_x_lim=0, x_lim=5000, neg_y_lim=0, y_lim=5000, random=True,
             max_sizes.append(max(group_sizes) if group_sizes else 0)
             size_distro.append(Counter(group_sizes))
 
-    if to_plot:
-        if skycoords is None:
-            plot_graph(g, points, n, iteration, neg_x_lim=neg_x_lim, x_lim=x_lim,
-                        neg_y_lim=neg_y_lim, y_lim=y_lim, output_dir=step_plot_dir)
-        else:
-            plot_star_map(skycoords, g, iteration=iteration, output_dir=step_plot_dir, patch_name=patch_name)
+
+    if skycoords is None:
+        plot_graph(g, points, n, iteration, neg_x_lim=neg_x_lim, x_lim=x_lim,
+                   neg_y_lim=neg_y_lim, y_lim=y_lim, output_dir=step_plot_dir)
+    else:
+        plot_star_map(skycoords, g, iteration=iteration, output_dir=step_plot_dir, patch_name=patch_name)
 
     if percolation_stats == True:
 
@@ -196,6 +198,14 @@ def run_sdrg(n=1, neg_x_lim=0, x_lim=5000, neg_y_lim=0, y_lim=5000, random=True,
         ax.set_ylabel("Count of clusters with that size")
         ax.legend(fontsize=7)
         fig.savefig(os.path.join(stat_output_dir, "cluster_distro_size_plt.png"))
+        plt.close(fig)
+
+        fig, ax = plt.subplots()
+        ax.plot(range(len(filtered_counts)), filtered_counts, marker='o', linestyle='-', color='g')
+        ax.set_title("Bonds Filtered per Iteration")
+        ax.set_xlabel("Iteration Number")
+        ax.set_ylabel("Number of Bonds Filtered")
+        fig.savefig(os.path.join(stat_output_dir, "filtered_bonds_plt.png"))
         plt.close(fig)
 
     with open(txt_f, "a", encoding="utf-8") as f:

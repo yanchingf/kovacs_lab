@@ -83,6 +83,8 @@ def filter_bond(graph, k ,neighbors=None):  # k is about to be decimated
 
 def decimate(graph, obj, filter=False):  # decimate node / edge
 
+    total_filtered = 0
+
     updated = []
 
     if obj[1] is None:
@@ -94,6 +96,9 @@ def decimate(graph, obj, filter=False):  # decimate node / edge
                      and graph.nodes[v].active) and in_range(graph, node_id, v)]
 
         r = len(neighbors)
+
+        if filter == True:
+            filter_bond(graph, node_id, neighbors=neighbors)
 
         for i in range(r): 
             for j in range(i+1, r):
@@ -154,6 +159,7 @@ def decimate(graph, obj, filter=False):  # decimate node / edge
         if filter == True:
             c = filter_bond(graph, u.id)
             print(f"Filtered {c} bonds merging into node {u.id}")
+            total_filtered += c
 
 
         graph.set_node_status(v_id, False)
@@ -161,7 +167,7 @@ def decimate(graph, obj, filter=False):  # decimate node / edge
             if graph.adj[v_id][k] > 0:
                 graph.remove_edge(v_id, k)
 
-    return
+    return total_filtered
 
 
 def repair(graph):

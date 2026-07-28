@@ -17,7 +17,7 @@ from sdrg import run_sdrg, plot_star_map
 
 data = get_all_star_data()
 
-c_lower_lim = 2
+c_lower_lim = 1
 c_upper_lim = 5
 c_range = list(range(c_lower_lim, c_upper_lim + 1))
 
@@ -91,7 +91,7 @@ for patch_name in patch_names:
 
             elapsed = time.perf_counter() - t0
 
-            c_dir = os.path.join(patch_dir, f"c_{c}", filter_flag)
+            c_dir = os.path.join(patch_dir, f"c_{c}", f"filter-{filter_flag}")
             os.makedirs(c_dir, exist_ok=True)
 
             plot_star_map(skycoords, g, iteration="final", output_dir=c_dir)
