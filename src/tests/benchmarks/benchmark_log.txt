@@ -269,4 +269,41 @@
 [2026-07-28T20:16:58] Done: Cnc (5 c-values x 2 variants)
 [2026-07-28T20:16:58] All benchmark results written to c:\Users\milan\Desktop\SURG_2026\src\tests\benchmarks\results.json
 [2026-07-28T20:16:58] === Benchmark run finished ===
+[2026-07-29T13:53:59] === Benchmark run started ===
+[2026-07-29T13:53:59] c_range=[1, 2, 3, 4, 5], patches=['Cnc'], variants=['unfiltered', 'filtered']
+[2026-07-29T13:53:59] Cnc: 112 stars found
+[2026-07-29T13:53:59] Running Cnc : c=1 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-29T13:54:35]   -> 33.076s, 103 clusters, max size 3
+[2026-07-29T13:54:35] Running Cnc : c=1 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-29T13:55:12]   -> 35.567s, 103 clusters, max size 3
+[2026-07-29T13:55:12] Running Cnc : c=2 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-29T13:55:41]   -> 26.940s, 84 clusters, max size 15
+[2026-07-29T13:55:41] Running Cnc : c=2 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-29T13:56:10]   -> 26.974s, 84 clusters, max size 15
+[2026-07-29T13:56:10] Running Cnc : c=3 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-29T13:56:32]   -> 19.637s, 62 clusters, max size 43
+[2026-07-29T13:56:32] Running Cnc : c=3 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-29T13:56:54]   -> 20.419s, 62 clusters, max size 43
+[2026-07-29T13:56:54] Running Cnc : c=4 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-29T13:57:10]   -> 14.073s, 46 clusters, max size 64
+[2026-07-29T13:57:10] Running Cnc : c=4 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-29T13:57:26]   -> 13.789s, 46 clusters, max size 64
+[2026-07-29T13:57:26] Running Cnc : c=5 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-29T13:57:40]   -> 12.644s, 37 clusters, max size 74
+[2026-07-29T13:57:40] Running Cnc : c=5 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-29T13:57:54]   -> 11.939s, 37 clusters, max size 74
+[2026-07-29T13:57:54] OK: Cnc c=1 — filtered/unfiltered final structure matches (103 clusters, max size 3)
+[2026-07-29T13:57:54] OK: Cnc c=2 — filtered/unfiltered final structure matches (84 clusters, max size 15)
+[2026-07-29T13:57:54] OK: Cnc c=3 — filtered/unfiltered final structure matches (62 clusters, max size 43)
+[2026-07-29T13:57:54] OK: Cnc c=4 — filtered/unfiltered final structure matches (46 clusters, max size 64)
+[2026-07-29T13:57:54] OK: Cnc c=5 — filtered/unfiltered final structure matches (37 clusters, max size 74)
+[2026-07-29T13:57:54] Cnc timing summary:
+  c=1: unfiltered=33.076s, filtered=35.567s, speedup=0.93x
+  c=2: unfiltered=26.940s, filtered=26.974s, speedup=1.00x
+  c=3: unfiltered=19.637s, filtered=20.419s, speedup=0.96x
+  c=4: unfiltered=14.073s, filtered=13.789s, speedup=1.02x
+  c=5: unfiltered=12.644s, filtered=11.939s, speedup=1.06x
+[2026-07-29T13:57:55] Done: Cnc (5 c-values x 2 variants)
+[2026-07-29T13:57:55] All benchmark results written to c:\Users\milan\Desktop\SURG_2026\src\tests\benchmarks\results.json
+[2026-07-29T13:57:55] === Benchmark run finished ===
 

@@ -16,7 +16,7 @@ from structures.graph_decimate import filter_bond
 from structures.graph_decimate import search
 from structures.graph_decimate import in_range
 from structures.graph_decimate import repair
-from structures.smart_decimate import improved_sdrg
+
 
 from src.data_handling.random_test import generate_random_graph
 from src.stars import plot_star_map
@@ -77,7 +77,7 @@ def plot_graph(g, points, n, iteration, neg_x_lim=0, x_lim=5000, neg_y_lim=0, y_
 def run_sdrg(n=1, neg_x_lim=0, x_lim=5000, neg_y_lim=0, y_lim=5000, random=True, inp=None, 
              percolation_stats=False, skycoords=None, patch_name=None,
              output_dir=os.path.join(os.path.dirname(__file__), '..', 'tests','runs'),
-             filter_bonds=False, plot_every=1):
+             filter_bonds=False, plot_every=1, k_neighbors=None):
     
     if random:
         obj = generate_random_graph(n, neg_x_lim, x_lim, neg_y_lim, y_lim)
@@ -89,7 +89,7 @@ def run_sdrg(n=1, neg_x_lim=0, x_lim=5000, neg_y_lim=0, y_lim=5000, random=True,
             print("INPUT REQUIRED")
             return
         
-        g = build_graph((inp[0], inp[1]), inp[2])
+        g = build_graph((inp[0], inp[1]), inp[2], k_neighbors)
         points = (inp[0], inp[1])
         n = len(inp[0])
 
@@ -118,20 +118,26 @@ def run_sdrg(n=1, neg_x_lim=0, x_lim=5000, neg_y_lim=0, y_lim=5000, random=True,
             
     n_clusters, max_sizes, size_distro, filtered_counts = [], [], [], []
 
-    while curr[0] != None:
+    curr = search(g)
+
+    while True:
+
+        couplings, field = curr
+
+        if not couplings and field == (None, None):
+            break
 
         with open(txt_f, "a", encoding="utf-8") as f:
             f.write(f"Step {iteration} | Ω={curr}\n") # write log
             for i in range(n):
                 f.write(f"    id={g.nodes[i].id} h={g.nodes[i].range} cluster={g.nodes[i].cluster_id} active={g.nodes[i].active}\n")
 
+        total, updated = decimate(g, curr, filter=filter_bonds)
+
         if filter_bonds == True:
-            total = decimate(g, curr, filter=True)
             with open(txt_f, "a", encoding="utf-8") as f:
                         f.write(f"    filtered {total} bonds this step\n")
             filtered_counts.append(total)
-        else: 
-            decimate(g, curr, filter=False)
 
         to_plot = ((iteration % plot_every) == 0)
 
@@ -144,7 +150,7 @@ def run_sdrg(n=1, neg_x_lim=0, x_lim=5000, neg_y_lim=0, y_lim=5000, random=True,
 
         iteration += 1
 
-        g = repair(g)
+        g = repair(g, to_repair=updated)
         curr = search(g)
 
         if percolation_stats == True:

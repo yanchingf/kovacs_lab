@@ -101,7 +101,7 @@ class Graph:
         return distances
 
 
-def build_graph(points, ranges):
+def build_graph(points, ranges, neighbors=None):
 
     x, y = points
     points = np.column_stack((x, y))
@@ -113,10 +113,28 @@ def build_graph(points, ranges):
         g.nodes[i].pos = points[i]
         g.nodes[i].range = ranges[i]
 
-    for i in range(n):
-        for j in range(i + 1, n):
-            d = np.linalg.norm(points[i] - points[j])
-            g.add_edge(i, j, d)
+    if neighbors is not None:
+        k = min(neighbors, n-1)
+        added = set()
+
+        diff = points[:, None, :] - points[None, :, :]
+        dist = np.linalg.norm(diff, axis=2)
+        np.fill_diagonal(dist, np.inf)
+
+        for i in range(n):
+            nearest = np.argsort(dist[i])[:k]
+            for j in nearest:
+                edge = (min(i, j), max(i, j))
+                if edge not in added:
+                    added.add(edge)
+                    g.add_edge(edge[0], edge[1], dist[i, j])
+                    print("Hit k-branch")
+
+    else:
+        for i in range(n):
+            for j in range(i + 1, n):
+                d = np.linalg.norm(points[i] - points[j])
+                g.add_edge(i, j, d)
 
     return g
  

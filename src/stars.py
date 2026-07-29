@@ -122,4 +122,3 @@ def final_visualization(g, skycoords, patch_name, output_dir, size_scale=20):
 
     fig.savefig(os.path.join(output_dir, f"final_clusters.png"))
     plt.close(fig)
-
