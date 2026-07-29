@@ -73,7 +73,7 @@ class Graph:
         self.group_ids[head_cluster].extend(self.group_ids.get(other, []))
         self.group_ids.pop(other, None)
 
-    def djikstra(self, id):
+    def djikstra(self, id,  max_dist=float("inf")):
 
         distances = [float("inf")] * self.length
         distances[id] = 0
@@ -85,11 +85,11 @@ class Graph:
             if curr_dist > distances[u]:
                 continue
 
-            if not self.nodes[u].active:
-                continue
+            if curr_dist > max_dist:
+                break;
 
             for v, weight in enumerate(self.adj[u]):
-                if not self.nodes[v].active:
+                if weight <= 0:
                     continue
 
                 new_dist = curr_dist + weight

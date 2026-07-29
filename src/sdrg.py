@@ -16,6 +16,7 @@ from structures.graph_decimate import filter_bond
 from structures.graph_decimate import search
 from structures.graph_decimate import in_range
 from structures.graph_decimate import repair
+from structures.smart_decimate import improved_sdrg
 
 from src.data_handling.random_test import generate_random_graph
 from src.stars import plot_star_map
@@ -214,19 +215,22 @@ def run_sdrg(n=1, neg_x_lim=0, x_lim=5000, neg_y_lim=0, y_lim=5000, random=True,
     return g
 
 
+def run_smart_sdrg(n=1, neg_x_lim=0, x_lim=5000, neg_y_lim=0, y_lim=5000, random=True, inp=None, 
+             percolation_stats=False, skycoords=None, patch_name=None,
+             output_dir=os.path.join(os.path.dirname(__file__), '..', 'tests','runs'),
+             filter_bonds=False, plot_every=1):
+    
+    return
 
-'''
 
-x = [100, 200, 300, 300]
-y = [100, 100, 100, 300]
-r = [120, 120, 120, 250]
-
+x = [100, 200, 300, 100, 200, 300, 100, 200, 300]
+y = [100, 200, 300, 200, 100, 200, 300, 300, 100]
+r = [110, 300, 110, 150, 150, 150, 110, 150, 110]
 
 
 test_output_dir = os.path.join(
-    os.path.dirname(__file__), '..', 'tests', 'sdrg-test-plots',
+    os.path.dirname(__file__), '..', 'tests', 'smart-sdrg-test-plots',
     datetime.now().strftime("%Y%m%d_%H%M%S")
 )
 
-run_sdrg(5, 0, 500, 0, 500, False, (x, y, r), output_dir=test_output_dir)
-'''
+run_smart_sdrg(5, 0, 500, 0, 500, False, (x, y, r), output_dir=test_output_dir)

@@ -108,3 +108,165 @@
 [2026-07-27T20:26:38] All benchmark results written to c:\Users\milan\Desktop\SURG_2026\src\tests\benchmarks\results.json
 [2026-07-27T20:26:38] === Benchmark run finished ===
 
+[2026-07-28T19:21:36] === Benchmark run started ===
+[2026-07-28T19:21:36] c_range=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], patches=['Cnc'], variants=['unfiltered', 'filtered']
+[2026-07-28T19:21:36] Cnc: 112 stars found
+[2026-07-28T19:21:36] Running Cnc : c=1 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-28T19:22:16]   -> 38.101s, 103 clusters, max size 3
+[2026-07-28T19:22:16] Running Cnc : c=1 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-28T19:22:58]   -> 39.285s, 110 clusters, max size 3
+[2026-07-28T19:22:58] Running Cnc : c=2 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-28T19:23:39]   -> 38.506s, 85 clusters, max size 15
+[2026-07-28T19:23:39] Running Cnc : c=2 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-28T19:24:12]   -> 31.229s, 109 clusters, max size 4
+[2026-07-28T19:24:12] Running Cnc : c=3 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-28T19:24:53]   -> 38.798s, 62 clusters, max size 43
+[2026-07-28T19:24:53] Running Cnc : c=3 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-28T19:25:27]   -> 31.879s, 107 clusters, max size 6
+[2026-07-28T19:25:27] Running Cnc : c=4 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-28T19:26:35]   -> 63.525s, 46 clusters, max size 64
+[2026-07-28T19:26:35] Running Cnc : c=4 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-28T19:27:24]   -> 47.436s, 104 clusters, max size 9
+[2026-07-28T19:27:24] Running Cnc : c=5 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-28T19:28:18]   -> 50.030s, 37 clusters, max size 74
+[2026-07-28T19:28:18] Running Cnc : c=5 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-28T19:29:03]   -> 42.307s, 98 clusters, max size 15
+[2026-07-28T19:29:03] Running Cnc : c=6 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-28T19:29:51]   -> 45.880s, 32 clusters, max size 81
+[2026-07-28T19:29:51] Running Cnc : c=6 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-28T19:30:28]   -> 35.109s, 91 clusters, max size 22
+[2026-07-28T19:30:28] Running Cnc : c=7 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-28T19:39:25] === Benchmark run started ===
+[2026-07-28T19:39:25] c_range=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], patches=['Cnc'], variants=['unfiltered', 'filtered']
+[2026-07-28T19:39:25] Cnc: 112 stars found
+[2026-07-28T19:39:25] Running Cnc : c=1 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-28T19:39:51] === Benchmark run started ===
+[2026-07-28T19:39:51] c_range=[1, 2, 3, 4, 5], patches=['Cnc'], variants=['unfiltered', 'filtered']
+[2026-07-28T19:39:51] Cnc: 112 stars found
+[2026-07-28T19:39:51] Running Cnc : c=1 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-28T19:40:30]   -> 37.127s, 103 clusters, max size 3
+[2026-07-28T19:40:30] Running Cnc : c=1 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-28T19:41:05]   -> 33.093s, 110 clusters, max size 3
+[2026-07-28T19:41:05] Running Cnc : c=2 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-28T19:41:44]   -> 36.893s, 85 clusters, max size 15
+[2026-07-28T19:41:44] Running Cnc : c=2 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-28T19:42:20]   -> 34.171s, 109 clusters, max size 4
+[2026-07-28T19:42:20] Running Cnc : c=3 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-28T19:42:58]   -> 35.409s, 62 clusters, max size 43
+[2026-07-28T19:42:58] Running Cnc : c=3 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-28T19:43:28]   -> 29.080s, 107 clusters, max size 6
+[2026-07-28T19:43:28] Running Cnc : c=4 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-28T19:44:04]   -> 34.328s, 46 clusters, max size 64
+[2026-07-28T19:44:04] Running Cnc : c=4 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-28T19:44:35]   -> 28.167s, 105 clusters, max size 8
+[2026-07-28T19:44:35] Running Cnc : c=5 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-28T19:45:11]   -> 34.652s, 37 clusters, max size 74
+[2026-07-28T19:45:11] Running Cnc : c=5 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-28T19:45:42]   -> 28.469s, 101 clusters, max size 12
+[2026-07-28T19:45:42] WARNING: Cnc c=1 — filtered and unfiltered runs disagree on final cluster structure (103 vs 110 clusters, max size 3 vs 3)
+[2026-07-28T19:45:42] WARNING: Cnc c=2 — filtered and unfiltered runs disagree on final cluster structure (85 vs 109 clusters, max size 15 vs 4)
+[2026-07-28T19:45:42] WARNING: Cnc c=3 — filtered and unfiltered runs disagree on final cluster structure (62 vs 107 clusters, max size 43 vs 6)
+[2026-07-28T19:45:42] WARNING: Cnc c=4 — filtered and unfiltered runs disagree on final cluster structure (46 vs 105 clusters, max size 64 vs 8)
+[2026-07-28T19:45:42] WARNING: Cnc c=5 — filtered and unfiltered runs disagree on final cluster structure (37 vs 101 clusters, max size 74 vs 12)
+[2026-07-28T19:45:42] Cnc timing summary:
+  c=1: unfiltered=37.127s, filtered=33.093s, speedup=1.12x
+  c=2: unfiltered=36.893s, filtered=34.171s, speedup=1.08x
+  c=3: unfiltered=35.409s, filtered=29.080s, speedup=1.22x
+  c=4: unfiltered=34.328s, filtered=28.167s, speedup=1.22x
+  c=5: unfiltered=34.652s, filtered=28.469s, speedup=1.22x
+[2026-07-28T19:45:42] Done: Cnc (5 c-values x 2 variants)
+[2026-07-28T19:45:42] All benchmark results written to c:\Users\milan\Desktop\SURG_2026\src\tests\benchmarks\results.json
+[2026-07-28T19:45:42] === Benchmark run finished ===
+
+[2026-07-28T19:48:39] === Benchmark run started ===
+[2026-07-28T19:48:39] c_range=[1, 2, 3, 4, 5], patches=['Cnc'], variants=['unfiltered', 'filtered']
+[2026-07-28T19:48:39] Cnc: 112 stars found
+[2026-07-28T19:48:39] Running Cnc : c=1 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-28T19:49:17]   -> 36.055s, 103 clusters, max size 3
+[2026-07-28T19:49:17] Running Cnc : c=1 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-28T19:49:57]   -> 37.548s, 103 clusters, max size 3
+[2026-07-28T19:49:57] Running Cnc : c=2 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-28T19:50:36]   -> 37.744s, 85 clusters, max size 15
+[2026-07-28T19:50:36] Running Cnc : c=2 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-28T19:51:16]   -> 37.883s, 85 clusters, max size 15
+[2026-07-28T19:51:16] Running Cnc : c=3 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-28T19:51:56]   -> 37.994s, 62 clusters, max size 43
+[2026-07-28T19:51:56] Running Cnc : c=3 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-28T19:52:36]   -> 37.549s, 62 clusters, max size 43
+[2026-07-28T19:52:36] Running Cnc : c=4 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-28T19:53:15]   -> 36.987s, 46 clusters, max size 64
+[2026-07-28T19:53:15] Running Cnc : c=4 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-28T19:53:54]   -> 37.035s, 46 clusters, max size 64
+[2026-07-28T19:53:54] Running Cnc : c=5 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-28T19:54:33]   -> 36.907s, 37 clusters, max size 74
+[2026-07-28T19:54:33] Running Cnc : c=5 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-28T19:55:12]   -> 37.304s, 37 clusters, max size 74
+[2026-07-28T19:55:12] OK: Cnc c=1 — filtered/unfiltered final structure matches (103 clusters, max size 3)
+[2026-07-28T19:55:12] OK: Cnc c=2 — filtered/unfiltered final structure matches (85 clusters, max size 15)
+[2026-07-28T19:55:12] OK: Cnc c=3 — filtered/unfiltered final structure matches (62 clusters, max size 43)
+[2026-07-28T19:55:12] OK: Cnc c=4 — filtered/unfiltered final structure matches (46 clusters, max size 64)
+[2026-07-28T19:55:12] OK: Cnc c=5 — filtered/unfiltered final structure matches (37 clusters, max size 74)
+[2026-07-28T19:55:12] Cnc timing summary:
+  c=1: unfiltered=36.055s, filtered=37.548s, speedup=0.96x
+  c=2: unfiltered=37.744s, filtered=37.883s, speedup=1.00x
+  c=3: unfiltered=37.994s, filtered=37.549s, speedup=1.01x
+  c=4: unfiltered=36.987s, filtered=37.035s, speedup=1.00x
+  c=5: unfiltered=36.907s, filtered=37.304s, speedup=0.99x
+[2026-07-28T19:55:12] Done: Cnc (5 c-values x 2 variants)
+[2026-07-28T19:55:12] All benchmark results written to c:\Users\milan\Desktop\SURG_2026\src\tests\benchmarks\results.json
+[2026-07-28T19:55:12] === Benchmark run finished ===
+
+[2026-07-28T20:04:47] === Benchmark run started ===
+[2026-07-28T20:04:47] c_range=[1, 2, 3, 4, 5], patches=['Cnc'], variants=['unfiltered', 'filtered']
+[2026-07-28T20:04:47] Cnc: 112 stars found
+[2026-07-28T20:04:47] Running Cnc : c=1 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-28T20:05:26]   -> 36.602s, 103 clusters, max size 3
+[2026-07-28T20:05:26] Running Cnc : c=1 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-28T20:06:06] === Benchmark run started ===
+[2026-07-28T20:06:06] c_range=[1, 2, 3, 4, 5], patches=['Cnc'], variants=['unfiltered', 'filtered']
+[2026-07-28T20:06:06] Cnc: 112 stars found
+[2026-07-28T20:06:06] Running Cnc : c=1 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-28T20:06:49]   -> 41.282s, 103 clusters, max size 3
+[2026-07-28T20:06:49] Running Cnc : c=1 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-28T20:07:29]   -> 37.383s, 103 clusters, max size 3
+[2026-07-28T20:07:29] Running Cnc : c=2 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-28T20:08:12]   -> 40.765s, 85 clusters, max size 15
+[2026-07-28T20:08:12] Running Cnc : c=2 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-28T20:10:08] === Benchmark run started ===
+[2026-07-28T20:10:08] c_range=[1, 2, 3, 4, 5], patches=['Cnc'], variants=['unfiltered', 'filtered']
+[2026-07-28T20:10:08] Cnc: 112 stars found
+[2026-07-28T20:10:08] Running Cnc : c=1 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-28T20:10:47]   -> 36.288s, 103 clusters, max size 3
+[2026-07-28T20:10:47] Running Cnc : c=1 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-28T20:11:27]   -> 38.003s, 103 clusters, max size 3
+[2026-07-28T20:11:27] Running Cnc : c=2 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-28T20:12:09]   -> 39.275s, 85 clusters, max size 15
+[2026-07-28T20:12:09] Running Cnc : c=2 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-28T20:13:03]   -> 51.783s, 85 clusters, max size 15
+[2026-07-28T20:13:03] Running Cnc : c=3 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-28T20:13:41]   -> 36.235s, 62 clusters, max size 43
+[2026-07-28T20:13:41] Running Cnc : c=3 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-28T20:14:23]   -> 40.207s, 62 clusters, max size 43
+[2026-07-28T20:14:23] Running Cnc : c=4 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-28T20:15:05]   -> 39.691s, 46 clusters, max size 64
+[2026-07-28T20:15:05] Running Cnc : c=4 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-28T20:15:43]   -> 36.423s, 46 clusters, max size 64
+[2026-07-28T20:15:43] Running Cnc : c=5 : variant=unfiltered (filter_bonds=False) : n=112
+[2026-07-28T20:16:20]   -> 34.909s, 37 clusters, max size 74
+[2026-07-28T20:16:20] Running Cnc : c=5 : variant=filtered (filter_bonds=True) : n=112
+[2026-07-28T20:16:58]   -> 36.426s, 37 clusters, max size 74
+[2026-07-28T20:16:58] OK: Cnc c=1 — filtered/unfiltered final structure matches (103 clusters, max size 3)
+[2026-07-28T20:16:58] OK: Cnc c=2 — filtered/unfiltered final structure matches (85 clusters, max size 15)
+[2026-07-28T20:16:58] OK: Cnc c=3 — filtered/unfiltered final structure matches (62 clusters, max size 43)
+[2026-07-28T20:16:58] OK: Cnc c=4 — filtered/unfiltered final structure matches (46 clusters, max size 64)
+[2026-07-28T20:16:58] OK: Cnc c=5 — filtered/unfiltered final structure matches (37 clusters, max size 74)
+[2026-07-28T20:16:58] Cnc timing summary:
+  c=1: unfiltered=36.288s, filtered=38.003s, speedup=0.95x
+  c=2: unfiltered=39.275s, filtered=51.783s, speedup=0.76x
+  c=3: unfiltered=36.235s, filtered=40.207s, speedup=0.90x
+  c=4: unfiltered=39.691s, filtered=36.423s, speedup=1.09x
+  c=5: unfiltered=34.909s, filtered=36.426s, speedup=0.96x
+[2026-07-28T20:16:58] Done: Cnc (5 c-values x 2 variants)
+[2026-07-28T20:16:58] All benchmark results written to c:\Users\milan\Desktop\SURG_2026\src\tests\benchmarks\results.json
+[2026-07-28T20:16:58] === Benchmark run finished ===
+
