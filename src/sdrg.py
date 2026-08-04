@@ -16,7 +16,7 @@ from structures.graph_decimate import filter_bond
 from structures.graph_decimate import search
 from structures.graph_decimate import in_range
 from structures.graph_decimate import repair
-
+from structures.smart_decimate import smart_search, smart_decimate
 
 from src.data_handling.random_test import generate_random_graph
 from src.stars import plot_star_map
@@ -73,101 +73,99 @@ def plot_graph(g, points, n, iteration, neg_x_lim=0, x_lim=5000, neg_y_lim=0, y_
     fig.savefig(os.path.join(output_dir, f"step_{iteration}.png"))
     plt.close(fig)
 
-
-def run_sdrg(n=1, neg_x_lim=0, x_lim=5000, neg_y_lim=0, y_lim=5000, random=True, inp=None, 
+ 
+def run_sdrg(n=1, neg_x_lim=0, x_lim=5000, neg_y_lim=0, y_lim=5000, random=True, inp=None,
              percolation_stats=False, skycoords=None, patch_name=None,
-             output_dir=os.path.join(os.path.dirname(__file__), '..', 'tests','runs'),
-             filter_bonds=False, plot_every=1, k_neighbors=None):
-    
+             output_dir=os.path.join(os.path.dirname(__file__), '..', 'tests', 'runs'),
+             filter_bonds=False, plot_every=1, k_neighbors=None, use_sky_coords=True,
+             smart=False):
+ 
     if random:
         obj = generate_random_graph(n, neg_x_lim, x_lim, neg_y_lim, y_lim)
         g = obj[0]
         points = obj[1]
-
+ 
     else:
         if inp == None:
             print("INPUT REQUIRED")
             return
-        
-        g = build_graph((inp[0], inp[1]), inp[2], k_neighbors)
+ 
+        g = build_graph((inp[0], inp[1]), inp[2], neighbors=k_neighbors, use_sky_coords=use_sky_coords)
         points = (inp[0], inp[1])
         n = len(inp[0])
-
+ 
+    search_fn = smart_search if smart else search
+ 
     iteration = 1
-    
-    curr = search(g)
-
+ 
+    curr = search_fn(g)
+ 
     step_plot_dir = os.path.join(output_dir, "steps")
     stat_output_dir = os.path.join(output_dir, "percolation")
     txt_f = os.path.join(output_dir, "log.txt")
-
+ 
     os.makedirs(step_plot_dir, exist_ok=True)
     os.makedirs(stat_output_dir, exist_ok=True)
-
+ 
     if skycoords is None:
-        plot_graph(g, points, n, iteration=0, neg_x_lim=neg_x_lim, x_lim=x_lim, 
-               neg_y_lim=neg_y_lim, y_lim=y_lim, output_dir=step_plot_dir) 
-    else: 
-        plot_star_map(skycoords, g, iteration=0, output_dir=step_plot_dir, patch_name=patch_name) 
-
+        plot_graph(g, points, n, iteration=0, neg_x_lim=neg_x_lim, x_lim=x_lim,
+                   neg_y_lim=neg_y_lim, y_lim=y_lim, output_dir=step_plot_dir)
+    else:
+        plot_star_map(skycoords, g, iteration=0, output_dir=step_plot_dir, patch_name=patch_name)
+ 
     with open(txt_f, "a", encoding="utf-8") as f:
         f.write(f"Step 0 | Ω=initial\n")
         for i in range(n):
             f.write(f"    id={g.nodes[i].id} h={g.nodes[i].range} "
                     f"cluster={g.nodes[i].cluster_id} active={g.nodes[i].active}\n")
-            
+ 
     n_clusters, max_sizes, size_distro, filtered_counts = [], [], [], []
-
-    curr = search(g)
-
-    while True:
-
-        couplings, field = curr
-
-        if not couplings and field == (None, None):
-            break
-
+ 
+    while curr[0] is not None:
+ 
         with open(txt_f, "a", encoding="utf-8") as f:
-            f.write(f"Step {iteration} | Ω={curr}\n") # write log
+            f.write(f"Step {iteration} | Ω={curr}\n")  # write log
             for i in range(n):
                 f.write(f"    id={g.nodes[i].id} h={g.nodes[i].range} cluster={g.nodes[i].cluster_id} active={g.nodes[i].active}\n")
-
-        total, updated = decimate(g, curr, filter=filter_bonds)
-
-        if filter_bonds == True:
+ 
+        if smart:
+            updated = smart_decimate(g, curr)
+        elif filter_bonds == True:
+            total, updated = decimate(g, curr, filter=True)
             with open(txt_f, "a", encoding="utf-8") as f:
-                        f.write(f"    filtered {total} bonds this step\n")
+                f.write(f"    filtered {total} bonds this step\n")
             filtered_counts.append(total)
-
+        else:
+            total, updated = decimate(g, curr, filter=False)
+ 
         to_plot = ((iteration % plot_every) == 0)
-
+ 
         if to_plot:
             if skycoords is None:
                 plot_graph(g, points, n, iteration, neg_x_lim=neg_x_lim, x_lim=x_lim,
                            neg_y_lim=neg_y_lim, y_lim=y_lim, output_dir=step_plot_dir)
             else:
                 plot_star_map(skycoords, g, iteration=iteration, output_dir=step_plot_dir, patch_name=patch_name)
-
+ 
         iteration += 1
-
-        g = repair(g, to_repair=updated)
-        curr = search(g)
-
+ 
+        g, repaired_candidates = repair(g, to_repair=updated)
+        curr = search_fn(g, candidates=repaired_candidates) if not smart else search_fn(g)
+ 
         if percolation_stats == True:
             group_sizes = [len(members) for members in g.group_ids.values()]
             n_clusters.append(len(group_sizes))
             max_sizes.append(max(group_sizes) if group_sizes else 0)
             size_distro.append(Counter(group_sizes))
-
-
+ 
     if skycoords is None:
         plot_graph(g, points, n, iteration, neg_x_lim=neg_x_lim, x_lim=x_lim,
                    neg_y_lim=neg_y_lim, y_lim=y_lim, output_dir=step_plot_dir)
     else:
         plot_star_map(skycoords, g, iteration=iteration, output_dir=step_plot_dir, patch_name=patch_name)
-
+ 
     if percolation_stats == True:
-
+ 
         fig, ax = plt.subplots()
         ax.plot(range(len(n_clusters)), n_clusters, marker='o', linestyle='-', color='b')
         ax.set_title("Number of Clusters by Iteration")
@@ -175,7 +173,7 @@ def run_sdrg(n=1, neg_x_lim=0, x_lim=5000, neg_y_lim=0, y_lim=5000, random=True,
         ax.set_ylabel("Number of Clusters")
         fig.savefig(os.path.join(stat_output_dir, "num_cluster_plt.png"))
         plt.close(fig)
-
+ 
         fig, ax = plt.subplots()
         ax.plot(range(len(max_sizes)), max_sizes, marker="o", linestyle='-', color='r')
         ax.set_title("Max Size of Cluster by Iteration")
@@ -183,7 +181,7 @@ def run_sdrg(n=1, neg_x_lim=0, x_lim=5000, neg_y_lim=0, y_lim=5000, random=True,
         ax.set_ylabel("Max Size of Cluster")
         fig.savefig(os.path.join(stat_output_dir, "max_cluster_size_plt.png"))
         plt.close(fig)
-
+ 
         fig, ax = plt.subplots()
         ax.plot(n_clusters, max_sizes, marker="o", linestyle='-', color='r')
         ax.set_title("Max Cluster Size vs Number of Clusters")
@@ -191,7 +189,7 @@ def run_sdrg(n=1, neg_x_lim=0, x_lim=5000, neg_y_lim=0, y_lim=5000, random=True,
         ax.set_ylabel("Max Size of Cluster")
         fig.savefig(os.path.join(stat_output_dir, "max_cluster_v_num_cluster_plt.png"))
         plt.close(fig)
-
+ 
         fig, ax = plt.subplots()
         sample_idxs = range(0, len(size_distro), max(1, len(size_distro) // 5))
         for idx in sample_idxs:
@@ -206,7 +204,7 @@ def run_sdrg(n=1, neg_x_lim=0, x_lim=5000, neg_y_lim=0, y_lim=5000, random=True,
         ax.legend(fontsize=7)
         fig.savefig(os.path.join(stat_output_dir, "cluster_distro_size_plt.png"))
         plt.close(fig)
-
+ 
         fig, ax = plt.subplots()
         ax.plot(range(len(filtered_counts)), filtered_counts, marker='o', linestyle='-', color='g')
         ax.set_title("Bonds Filtered per Iteration")
@@ -214,29 +212,51 @@ def run_sdrg(n=1, neg_x_lim=0, x_lim=5000, neg_y_lim=0, y_lim=5000, random=True,
         ax.set_ylabel("Number of Bonds Filtered")
         fig.savefig(os.path.join(stat_output_dir, "filtered_bonds_plt.png"))
         plt.close(fig)
-
+ 
     with open(txt_f, "a", encoding="utf-8") as f:
         f.write(f"Done at iteration {iteration}, plots saved to '{output_dir}/'\n")
-
+ 
     return g
+ 
+ 
+# ---------------------------------------------------------------------------
+# Test cases
+# ---------------------------------------------------------------------------
+# Each entry: (name, x, y, r). Add new hand-built test graphs here instead
+# of scattering separate script blocks -- run_tests() loops over all of
+# them, running both the naive and smart algorithms on each so results
+# can be diffed directly.
+ 
+TEST_CASES = [
+    (
+        [100, 200, 300, 300],
+        [100, 100, 100, 300],
+        [120, 120, 120, 250],
+    ),
+    (
+        [100, 200, 300, 100, 200, 300, 100, 200, 300],
+        [100, 200, 300, 200, 100, 200, 300, 300, 100],
+        [110, 300, 110, 150, 150, 150, 110, 150, 110],
+    ),
+]
+ 
 
-
-def run_smart_sdrg(n=1, neg_x_lim=0, x_lim=5000, neg_y_lim=0, y_lim=5000, random=True, inp=None, 
-             percolation_stats=False, skycoords=None, patch_name=None,
-             output_dir=os.path.join(os.path.dirname(__file__), '..', 'tests','runs'),
-             filter_bonds=False, plot_every=1):
-    
-    return
-
-
-x = [100, 200, 300, 100, 200, 300, 100, 200, 300]
-y = [100, 200, 300, 200, 100, 200, 300, 300, 100]
-r = [110, 300, 110, 150, 150, 150, 110, 150, 110]
-
-
-test_output_dir = os.path.join(
-    os.path.dirname(__file__), '..', 'tests', 'smart-sdrg-test-plots',
-    datetime.now().strftime("%Y%m%d_%H%M%S")
-)
-
-run_smart_sdrg(5, 0, 500, 0, 500, False, (x, y, r), output_dir=test_output_dir)
+def run_tests(compare_smart=True):
+ 
+    for x, y, r in TEST_CASES:
+ 
+        n = len(x)
+ 
+        variants = [("naive", False)] + ([("smart", True)] if compare_smart else [])
+ 
+        for variant_name, smart_flag in variants:
+ 
+            out_dir = os.path.join(os.path.dirname(__file__), '..', 'tests', 'sdrg-test-plots',
+                                    datetime.now().strftime("%Y%m%d_%H%M%S"))
+ 
+            print(f"Running test case ({variant_name})")
+ 
+            run_sdrg(n, 0, 500, 0, 500, False, (x, y, r), output_dir=out_dir, use_sky_coords=False, smart=smart_flag)
+ 
+ 
+run_tests()
