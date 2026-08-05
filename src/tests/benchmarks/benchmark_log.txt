@@ -307,3 +307,41 @@
 [2026-07-29T13:57:55] All benchmark results written to c:\Users\milan\Desktop\SURG_2026\src\tests\benchmarks\results.json
 [2026-07-29T13:57:55] === Benchmark run finished ===
 
+[2026-08-05T12:11:42] === Benchmark run started ===
+[2026-08-05T12:11:42] c_range=[1, 2, 3, 4, 5], patches=['Cnc'], variants=['naive', 'smart']
+[2026-08-05T12:11:42] Cnc: 112 stars found
+[2026-08-05T12:11:42] Running Cnc : c=1 : variant=naive (smart=False) : n=112
+[2026-08-05T12:12:09]   -> 24.595s, 110 clusters, max size 3
+[2026-08-05T12:12:09] Running Cnc : c=1 : variant=smart (smart=True) : n=112
+[2026-08-05T12:12:41]   -> 28.885s, 103 clusters, max size 3
+[2026-08-05T12:12:41] Running Cnc : c=2 : variant=naive (smart=False) : n=112
+[2026-08-05T12:13:08]   -> 23.992s, 106 clusters, max size 7
+[2026-08-05T12:13:08] Running Cnc : c=2 : variant=smart (smart=True) : n=112
+[2026-08-05T12:13:40]   -> 29.791s, 89 clusters, max size 9
+[2026-08-05T12:13:40] Running Cnc : c=3 : variant=naive (smart=False) : n=112
+[2026-08-05T12:14:01]   -> 17.476s, 107 clusters, max size 6
+[2026-08-05T12:14:01] Running Cnc : c=3 : variant=smart (smart=True) : n=112
+[2026-08-05T12:14:35]   -> 31.237s, 66 clusters, max size 23
+[2026-08-05T12:14:35] Running Cnc : c=4 : variant=naive (smart=False) : n=112
+[2026-08-05T12:14:57]   -> 18.693s, 97 clusters, max size 16
+[2026-08-05T12:14:57] Running Cnc : c=4 : variant=smart (smart=True) : n=112
+[2026-08-05T12:15:30]   -> 30.380s, 46 clusters, max size 64
+[2026-08-05T12:15:30] Running Cnc : c=5 : variant=naive (smart=False) : n=112
+[2026-08-05T12:16:02]   -> 29.640s, 42 clusters, max size 71
+[2026-08-05T12:16:02] Running Cnc : c=5 : variant=smart (smart=True) : n=112
+[2026-08-05T12:16:38]   -> 32.446s, 38 clusters, max size 71
+[2026-08-05T12:16:38] WARNING: Cnc c=1 — naive and smart runs disagree on final cluster structure (110 vs 103 clusters, max size 3 vs 3)
+[2026-08-05T12:16:38] WARNING: Cnc c=2 — naive and smart runs disagree on final cluster structure (106 vs 89 clusters, max size 7 vs 9)
+[2026-08-05T12:16:38] WARNING: Cnc c=3 — naive and smart runs disagree on final cluster structure (107 vs 66 clusters, max size 6 vs 23)
+[2026-08-05T12:16:38] WARNING: Cnc c=4 — naive and smart runs disagree on final cluster structure (97 vs 46 clusters, max size 16 vs 64)
+[2026-08-05T12:16:38] WARNING: Cnc c=5 — naive and smart runs disagree on final cluster structure (42 vs 38 clusters, max size 71 vs 71)
+[2026-08-05T12:16:38] Cnc timing summary:
+  c=1: naive=24.595s, smart=28.885s, speedup=0.85x
+  c=2: naive=23.992s, smart=29.791s, speedup=0.81x
+  c=3: naive=17.476s, smart=31.237s, speedup=0.56x
+  c=4: naive=18.693s, smart=30.380s, speedup=0.62x
+  c=5: naive=29.640s, smart=32.446s, speedup=0.91x
+[2026-08-05T12:16:38] Done: Cnc (5 c-values x 2 variants)
+[2026-08-05T12:16:38] All benchmark results written to c:\Users\milan\Desktop\SURG_2026\src\tests\benchmarks\results.json
+[2026-08-05T12:16:38] === Benchmark run finished ===
+

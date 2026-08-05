@@ -3,24 +3,23 @@
     "patch": "Cnc",
     "c": 1,
     "n_stars": 112,
-    "variant": "unfiltered",
+    "variant": "naive",
     "filter_bonds": false,
-    "elapsed_sec": 33.07569570001215,
-    "num_clusters": 103,
+    "elapsed_sec": 24.594868900021538,
+    "num_clusters": 110,
     "max_cluster_size": 3,
     "cluster_size_dist": {
-      "1": 96,
-      "3": 2,
-      "2": 5
+      "1": 109,
+      "3": 1
     }
   },
   {
     "patch": "Cnc",
     "c": 1,
     "n_stars": 112,
-    "variant": "filtered",
+    "variant": "smart",
     "filter_bonds": true,
-    "elapsed_sec": 35.56743610010017,
+    "elapsed_sec": 28.885005599819124,
     "num_clusters": 103,
     "max_cluster_size": 3,
     "cluster_size_dist": {
@@ -33,128 +32,122 @@
     "patch": "Cnc",
     "c": 2,
     "n_stars": 112,
-    "variant": "unfiltered",
+    "variant": "naive",
     "filter_bonds": false,
-    "elapsed_sec": 26.940155899967067,
-    "num_clusters": 84,
-    "max_cluster_size": 15,
+    "elapsed_sec": 23.991653200006112,
+    "num_clusters": 106,
+    "max_cluster_size": 7,
     "cluster_size_dist": {
-      "1": 75,
-      "2": 6,
-      "7": 1,
-      "3": 1,
-      "15": 1
+      "1": 105,
+      "7": 1
     }
   },
   {
     "patch": "Cnc",
     "c": 2,
     "n_stars": 112,
-    "variant": "filtered",
+    "variant": "smart",
     "filter_bonds": true,
-    "elapsed_sec": 26.973722800030373,
-    "num_clusters": 84,
-    "max_cluster_size": 15,
+    "elapsed_sec": 29.79058749997057,
+    "num_clusters": 89,
+    "max_cluster_size": 9,
     "cluster_size_dist": {
-      "1": 75,
-      "2": 6,
-      "7": 1,
+      "4": 1,
+      "1": 76,
+      "2": 10,
       "3": 1,
-      "15": 1
+      "9": 1
     }
   },
   {
     "patch": "Cnc",
     "c": 3,
     "n_stars": 112,
-    "variant": "unfiltered",
+    "variant": "naive",
     "filter_bonds": false,
-    "elapsed_sec": 19.636978999944404,
-    "num_clusters": 62,
-    "max_cluster_size": 43,
+    "elapsed_sec": 17.4762418998871,
+    "num_clusters": 107,
+    "max_cluster_size": 6,
     "cluster_size_dist": {
-      "2": 6,
-      "1": 54,
-      "3": 1,
-      "43": 1
+      "6": 1,
+      "1": 106
     }
   },
   {
     "patch": "Cnc",
     "c": 3,
     "n_stars": 112,
-    "variant": "filtered",
+    "variant": "smart",
     "filter_bonds": true,
-    "elapsed_sec": 20.41910340008326,
-    "num_clusters": 62,
-    "max_cluster_size": 43,
+    "elapsed_sec": 31.236931700026616,
+    "num_clusters": 66,
+    "max_cluster_size": 23,
     "cluster_size_dist": {
       "2": 6,
       "1": 54,
+      "10": 1,
+      "3": 3,
+      "4": 1,
+      "23": 1
+    }
+  },
+  {
+    "patch": "Cnc",
+    "c": 4,
+    "n_stars": 112,
+    "variant": "naive",
+    "filter_bonds": false,
+    "elapsed_sec": 18.692588499980047,
+    "num_clusters": 97,
+    "max_cluster_size": 16,
+    "cluster_size_dist": {
+      "16": 1,
+      "1": 96
+    }
+  },
+  {
+    "patch": "Cnc",
+    "c": 4,
+    "n_stars": 112,
+    "variant": "smart",
+    "filter_bonds": true,
+    "elapsed_sec": 30.379709200002253,
+    "num_clusters": 46,
+    "max_cluster_size": 64,
+    "cluster_size_dist": {
+      "1": 43,
+      "2": 1,
       "3": 1,
-      "43": 1
-    }
-  },
-  {
-    "patch": "Cnc",
-    "c": 4,
-    "n_stars": 112,
-    "variant": "unfiltered",
-    "filter_bonds": false,
-    "elapsed_sec": 14.073375900043175,
-    "num_clusters": 46,
-    "max_cluster_size": 64,
-    "cluster_size_dist": {
-      "1": 43,
-      "64": 1,
-      "2": 1,
-      "3": 1
-    }
-  },
-  {
-    "patch": "Cnc",
-    "c": 4,
-    "n_stars": 112,
-    "variant": "filtered",
-    "filter_bonds": true,
-    "elapsed_sec": 13.789379499969073,
-    "num_clusters": 46,
-    "max_cluster_size": 64,
-    "cluster_size_dist": {
-      "1": 43,
-      "64": 1,
-      "2": 1,
-      "3": 1
+      "64": 1
     }
   },
   {
     "patch": "Cnc",
     "c": 5,
     "n_stars": 112,
-    "variant": "unfiltered",
+    "variant": "naive",
     "filter_bonds": false,
-    "elapsed_sec": 12.644298500032164,
-    "num_clusters": 37,
-    "max_cluster_size": 74,
+    "elapsed_sec": 29.639752000104636,
+    "num_clusters": 42,
+    "max_cluster_size": 71,
     "cluster_size_dist": {
-      "1": 35,
-      "74": 1,
-      "3": 1
+      "71": 1,
+      "1": 41
     }
   },
   {
     "patch": "Cnc",
     "c": 5,
     "n_stars": 112,
-    "variant": "filtered",
+    "variant": "smart",
     "filter_bonds": true,
-    "elapsed_sec": 11.939289700007066,
-    "num_clusters": 37,
-    "max_cluster_size": 74,
+    "elapsed_sec": 32.4458314999938,
+    "num_clusters": 38,
+    "max_cluster_size": 71,
     "cluster_size_dist": {
       "1": 35,
-      "74": 1,
-      "3": 1
+      "71": 1,
+      "3": 2
     }
   }
 ]

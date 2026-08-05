@@ -8,6 +8,7 @@ import math
 import random
 from src.structures.graph import Graph
 from src.structures.graph import angular_sep
+from src.structures import graph_decimate_kernel
 
 import numpy as np
 
@@ -20,16 +21,21 @@ def in_range(graph, u, v):
     d = graph.adj[u][v]
     return d <= graph.nodes[u].range and d <= graph.nodes[v].range
 
+def search(graph):
+    n = graph.length
+    adj = np.ascontiguousarray(graph.adj[:n, :n], dtype=np.float64)
+    ranges = np.array([graph.nodes[i].range for i in range(n)], dtype=np.float64)
+    active = np.array([graph.nodes[i].active for i in range(n)], dtype=bool)
+    i, j = graph_decimate_kernel.search_kernel(adj, ranges, active, n)
+    return (i, j)
 
-def search(graph, candidates=None):
+def search_n(graph):
 
     active = [i for i, node in graph.nodes.items() if node.active]
     active_set = set(active)
- 
-    scan_i = [i for i in candidates if i in active_set] if candidates is not None else active
 
     # pass 1: decimate any available coupling before doing fields
-    for i in scan_i:
+    for i in active:
 
         for j in active:
 
@@ -172,8 +178,19 @@ def decimate(graph, obj, filter=False):  # decimate node / edge
         for k in range(graph.length):
 
             if not (k == u.id or k == v_id):
-
-                best = min(graph.adj[u.id][k], graph.adj[v_id][k])
+ 
+                d_uk = graph.adj[u.id][k]
+                d_vk = graph.adj[v_id][k]
+ 
+                if d_uk > 0 and d_vk > 0:
+                    best = min(d_uk, d_vk)
+                elif d_uk > 0:
+                    best = d_uk
+                elif d_vk > 0:
+                    best = d_vk
+                else:
+                    best = 0
+ 
                 graph.adj[u.id][k] = best
                 graph.adj[k][u.id] = best
 
@@ -198,8 +215,8 @@ def decimate(graph, obj, filter=False):  # decimate node / edge
     return total_filtered, list(dict.fromkeys(updated))
 
 
-def find_sep(n_i, n_j):
-    if getattr(n_i, "use_sky_coords", True):
+def find_sep(graph, n_i, n_j):
+    if getattr(graph, "use_sky_coords", True):
         return angular_sep(n_i.ra, n_i.dec, n_j.ra, n_j.dec)
     return np.linalg.norm(n_i.pos - n_j.pos)
 

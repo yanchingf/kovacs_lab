@@ -45,6 +45,7 @@ class Graph:
         self.length = n
         self.tree = tree if not None else None
         self.use_sky_coords = use_sky_coords
+        self.adj_list = None
 
     def add_edge(self, u, v, weight):
 

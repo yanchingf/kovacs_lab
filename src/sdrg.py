@@ -150,7 +150,7 @@ def run_sdrg(n=1, neg_x_lim=0, x_lim=5000, neg_y_lim=0, y_lim=5000, random=True,
         iteration += 1
  
         g, repaired_candidates = repair(g, to_repair=updated)
-        curr = search_fn(g, candidates=repaired_candidates) if not smart else search_fn(g)
+        curr = search_fn(g) if not smart else search_fn(g)
  
         if percolation_stats == True:
             group_sizes = [len(members) for members in g.group_ids.values()]
@@ -218,26 +218,52 @@ def run_sdrg(n=1, neg_x_lim=0, x_lim=5000, neg_y_lim=0, y_lim=5000, random=True,
  
     return g
  
- 
-# ---------------------------------------------------------------------------
-# Test cases
-# ---------------------------------------------------------------------------
-# Each entry: (name, x, y, r). Add new hand-built test graphs here instead
-# of scattering separate script blocks -- run_tests() loops over all of
-# them, running both the naive and smart algorithms on each so results
-# can be diffed directly.
- 
+
 TEST_CASES = [
-    (
-        [100, 200, 300, 300],
-        [100, 100, 100, 300],
-        [120, 120, 120, 250],
-    ),
-    (
-        [100, 200, 300, 100, 200, 300, 100, 200, 300],
-        [100, 200, 300, 200, 100, 200, 300, 300, 100],
-        [110, 300, 110, 150, 150, 150, 110, 150, 110],
-    ),
+     
+    ([200, 400], [150, 150], [10, 10]),
+
+    ([200, 400], [150, 150], [250, 250]),
+
+    ([100, 300], [200, 200], [200, 200]),
+
+    ([100, 200, 300, 100, 200, 300, 100, 200, 300],
+     [100, 200, 300, 200, 100, 200, 300, 300, 100],
+     [150, 300, 10, 150, 150, 10, 10, 10, 10]),
+
+    ([100, 200, 300, 100, 200, 300, 100, 200, 300],
+     [100, 200, 300, 200, 100, 200, 300, 300, 100],
+     [150, 400, 150, 10, 10, 10, 150, 10, 150]),
+
+    ([100, 200, 300, 100, 200, 300, 100, 200, 300],
+     [100, 200, 300, 200, 100, 200, 300, 300, 100],
+     [90, 300, 90, 150, 150, 150, 90, 150, 90]),
+
+    ([100, 200, 300, 100, 200, 300, 100, 200, 300],
+     [100, 200, 300, 200, 100, 200, 300, 300, 100],
+     [110, 300, 110, 150, 150, 150, 110, 150, 110]),
+
+    ([100, 150, 240, 290], [200, 200, 200, 200], [100, 60, 100, 60]),
+
+    ([100, 150, 240, 290], [200, 200, 200, 200], [60, 60, 100, 60]),
+
+    ([100, 200, 300, 300], [100, 100, 100, 300], [120, 120, 120, 250]),
+
+    ([200, 400, 200, 400], [200, 200, 400, 400], [250, 250, 250, 250]),
+
+    ([100, 200, 500], [100, 100, 100], [110, 110, 110]),
+
+    ([100, 200, 150], [100, 100, 186.6], [110, 110, 110]),
+
+    ([99, 100, 200], [300, 300, 300], [99, 99, 199]),
+
+    ([200, 300, 400], [200, 200, 200], [300, 300, 300]),
+
+    ([100, 400, 700], [200, 200, 200], [350, 350, 350]),
+
+    ([300, 100, 300, 500, 300], [300, 300, 100, 300, 500], [210, 210, 210, 210, 210]),
+    ([100, 280, 460, 640, 820, 1000], [200, 200, 200, 200, 200, 200], [200, 200, 200, 200, 200, 200]),
+    ([200, 400, 450, 700, 850], [200, 200, 200, 200, 200], [220, 220, 220, 220, 220]),
 ]
  
 
@@ -253,10 +279,13 @@ def run_tests(compare_smart=True):
  
             out_dir = os.path.join(os.path.dirname(__file__), '..', 'tests', 'sdrg-test-plots',
                                     datetime.now().strftime("%Y%m%d_%H%M%S"))
+
+            if compare_smart:
+                flag_file = "smart" if smart_flag==True else "naive"
+                out_dir = os.path.join(out_dir, f"{flag_file}")
  
             print(f"Running test case ({variant_name})")
  
             run_sdrg(n, 0, 500, 0, 500, False, (x, y, r), output_dir=out_dir, use_sky_coords=False, smart=smart_flag)
  
- 
-run_tests()
+run_tests(compare_smart=False)
