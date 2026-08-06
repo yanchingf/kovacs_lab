@@ -1,0 +1,10 @@
+Step 0 | Ω=initial
+    id=0 h=200.0 cluster=0 active=True
+    id=1 h=200.0 cluster=1 active=True
+Step 1 | Ω=(0, 1)
+    id=0 h=200.0 cluster=0 active=True
+    id=1 h=200.0 cluster=1 active=True
+Step 2 | Ω=(0, None)
+    id=0 h=200.0 cluster=0 active=True
+    id=1 h=200.0 cluster=0 active=False
+Done at iteration 3, plots saved to 'c:\Users\milan\Desktop\SURG_2026\src\..\tests\sdrg-test-plots\20260805_161334\naive/'

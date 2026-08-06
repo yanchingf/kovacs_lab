@@ -288,4 +288,4 @@ def run_tests(compare_smart=True):
  
             run_sdrg(n, 0, 500, 0, 500, False, (x, y, r), output_dir=out_dir, use_sky_coords=False, smart=smart_flag)
  
-run_tests(compare_smart=False)
+run_tests(compare_smart=True)

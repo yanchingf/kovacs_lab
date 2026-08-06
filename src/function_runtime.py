@@ -18,7 +18,7 @@ import matplotlib.pyplot as plt
 
 from structures.graph import build_graph
 from structures.graph_decimate import search, decimate, repair
-from structures.smart_decimate import smart_search, smart_decimate
+from structures.smart_decimate import smart_search, smart_search_v2, smart_decimate
 
 matplotlib.use("Agg")
 
@@ -153,7 +153,7 @@ def run_benchmark(sizes=None, repeats=5, seed=42, image_name="runtime_scaling.pn
 
 def run_to_completion(g, use_smart):
  
-    search_fn = smart_search if use_smart else search
+    search_fn = smart_search_v2 if use_smart else search
     decimate_fn = smart_decimate if use_smart else decimate
  
     start = time.perf_counter()
@@ -162,10 +162,7 @@ def run_to_completion(g, use_smart):
     curr = search_fn(g)
  
     while curr[0] is not None:
-        if use_smart:
-            decimate_fn(g, curr)
-        else:
-            decimate_fn(g, curr) 
+        decimate_fn(g, curr)
         curr = search_fn(g)
         steps += 1
  
@@ -226,17 +223,35 @@ def plot_full_run_results(results, out_path, k_neighbors=None):
 
 output_dir = os.path.join(os.path.dirname(__file__), '..', 'tests', 'test-plots')
 
-run_benchmark(image_name="testing_parallel_search.png", output_dir=output_dir)
-'''
-run_benchmark(image_name="runtime_scaling_k=5.png", k_neighbors=5, output_dir=output_dir)
-run_benchmark(image_name="runtime_scaling_k=10.png", k_neighbors=10, output_dir=output_dir)
 
+'''
+run_benchmark(image_name="runtime_scaling_k_v2=None.png", output_dir=output_dir)
+run_benchmark(image_name="runtime_scaling_k_v2=5.png", k_neighbors=5, output_dir=output_dir)
+run_benchmark(image_name="runtime_scaling_k_v2=10.png", k_neighbors=10, output_dir=output_dir)
+'''
+
+'''
 full_dense = full_run_benchmark([10, 25, 50, 100, 200, 300, 400, 1000], k_neighbors=None)
-plot_full_run_results(full_dense, os.path.join(output_dir, "full_run_dense.png"), k_neighbors=None)
+plot_full_run_results(full_dense, os.path.join(output_dir, "full_run_dense_v2.png"), k_neighbors=None)
 
 full_sparse = full_run_benchmark([10, 25, 50, 100, 200, 300, 400, 1000], k_neighbors=5)
-plot_full_run_results(full_sparse, os.path.join(output_dir, "full_run_k=5.png"), k_neighbors=10)
+plot_full_run_results(full_sparse, os.path.join(output_dir, "full_run_k=5_v2.png"), k_neighbors=10)
  
 full_sparse = full_run_benchmark([10, 25, 50, 100, 200, 300, 400, 1000], k_neighbors=10)
-plot_full_run_results(full_sparse, os.path.join(output_dir, "full_run_k=10.png"), k_neighbors=10)
+plot_full_run_results(full_sparse, os.path.join(output_dir, "full_run_k=10_v2.png"), k_neighbors=10)
 '''
+
+full_dense = full_run_benchmark([10, 25, 50, 100, 200, 300, 400, 1000], k_neighbors=None)
+plot_full_run_results(full_dense, os.path.join(output_dir, "full_run_dense_v2.png"), k_neighbors=None)
+
+full_sparse1 = full_run_benchmark([10, 25, 50, 100, 200, 300, 400, 1000], k_neighbors=5)
+plot_full_run_results(full_sparse1, os.path.join(output_dir, "full_run_k=5_v2.png"), k_neighbors=10)
+ 
+full_sparse2 = full_run_benchmark([10, 25, 50, 100, 200, 300, 400, 1000], k_neighbors=10)
+plot_full_run_results(full_sparse2, os.path.join(output_dir, "full_run_k=10_v2.png"), k_neighbors=10)
+
+full_sparse3 = full_run_benchmark([10, 25, 50, 100, 200, 300, 400, 1000], k_neighbors=25)
+plot_full_run_results(full_sparse3, os.path.join(output_dir, "full_run_k=25_v2.png"), k_neighbors=25)
+
+full_sparse2 = full_run_benchmark([10, 25, 50, 100, 200, 300, 400, 1000], k_neighbors=50)
+plot_full_run_results(full_sparse2, os.path.join(output_dir, "full_run_k=50_v2.png"), k_neighbors=50)
