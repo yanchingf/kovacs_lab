@@ -21,7 +21,7 @@ c_lower_lim = 1
 c_upper_lim = 5
 c_range = list(range(c_lower_lim, c_upper_lim + 1))
 
-patch_names = ["Cnc"]
+patch_names = ["Cnc", "UMa", "Psc"]
 
 variants = {
     "naive": False,
@@ -85,11 +85,12 @@ for patch_name in patch_names:
                 skycoords=skycoords,
                 patch_name=patch_name,
                 output_dir=run_dir,
-                plot_every=10,
+                plot_every=10000000,
                 smart=smart_flag,
             )
 
             elapsed = time.perf_counter() - t0
+            log(f"  -> finished in {elapsed:.3f}s")
 
             c_dir = os.path.join(patch_dir, f"c_{c}", f"smart-{smart_flag}")
             os.makedirs(c_dir, exist_ok=True)
@@ -99,21 +100,25 @@ for patch_name in patch_names:
 
             sizes = [len(members) for members in g.group_ids.values()]
 
+            partition = sorted([sorted(members) for members in g.group_ids.values()])
+
             result = {
                 "patch": patch_name,
                 "c": c,
                 "n_stars": len(x),
                 "variant": variant_name,
-                "filter_bonds": smart_flag,
+                "smart": smart_flag,
                 "elapsed_sec": elapsed,
                 "num_clusters": len(sizes),
                 "max_cluster_size": max(sizes) if sizes else 0,
                 "cluster_size_dist": dict(Counter(sizes)),
+                "cluster_partition": partition,
             }
             results.append(result)
 
             log(f"  -> {elapsed:.3f}s, {result['num_clusters']} clusters, "
                 f"max size {result['max_cluster_size']}")
+
 
     for c in c_range:
         rows = [r for r in results if r["patch"] == patch_name and r["c"] == c]
@@ -124,13 +129,19 @@ for patch_name in patch_names:
 
         u = by_variant["naive"]
         f = by_variant["smart"]
-        if u["num_clusters"] != f["num_clusters"] or u["max_cluster_size"] != f["max_cluster_size"]:
+
+        same_counts = (u["num_clusters"] == f["num_clusters"]
+                       and u["max_cluster_size"] == f["max_cluster_size"])
+        same_partition = (u["cluster_partition"] == f["cluster_partition"])
+
+        if not same_counts or not same_partition:
             log(f"WARNING: {patch_name} c={c} — naive and smart runs "
                 f"disagree on final cluster structure "
                 f"({u['num_clusters']} vs {f['num_clusters']} clusters, "
-                f"max size {u['max_cluster_size']} vs {f['max_cluster_size']})")
+                f"max size {u['max_cluster_size']} vs {f['max_cluster_size']}, "
+                f"same membership: {same_partition})")
         else:
-            log(f"OK: {patch_name} c={c} — naive/smart final structure matches "
+            log(f"OK: {patch_name} c={c} — naive/smart final structure AND membership match "
                 f"({u['num_clusters']} clusters, max size {u['max_cluster_size']})")
 
     times_by_variant = {

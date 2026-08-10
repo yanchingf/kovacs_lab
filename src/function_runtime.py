@@ -1,3 +1,4 @@
+
 import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
@@ -17,7 +18,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 
 from structures.graph import build_graph
-from structures.graph_decimate import search, decimate, repair
+from structures.graph_decimate import search, decimate, repair, search_k
 from structures.smart_decimate import smart_search, smart_search_v2, smart_decimate
 
 matplotlib.use("Agg")
@@ -56,7 +57,7 @@ def benchmark(sizes, repeats=5, seed=0, k_neighbors=None):
         print(f"Benchmarking n={n} (k_neighbors={k_neighbors}) ...")
 
         base_graph = make_random_graph(n, seed=seed, k_neighbors=k_neighbors)
-        t_search = time_fn(search, lambda: base_graph, repeats=repeats)
+        t_search = time_fn(search_k, lambda: base_graph, repeats=repeats)
 
         t_smart_search = time_fn(smart_search, lambda: base_graph, repeats=repeats)
 
@@ -70,7 +71,7 @@ def benchmark(sizes, repeats=5, seed=0, k_neighbors=None):
             return g
 
         def decimate_call(g):
-            obj = search(g)
+            obj = search_k(g)
             decimate(g, obj)
 
         def smart_decimate_call(g):
@@ -152,74 +153,82 @@ def run_benchmark(sizes=None, repeats=5, seed=42, image_name="runtime_scaling.pn
 
 
 def run_to_completion(g, use_smart):
- 
-    search_fn = smart_search_v2 if use_smart else search
+
+    search_fn = smart_search_v2 if use_smart else search_k
     decimate_fn = smart_decimate if use_smart else decimate
- 
+
     start = time.perf_counter()
- 
+
     steps = 0
     curr = search_fn(g)
- 
+
     while curr[0] is not None:
         decimate_fn(g, curr)
         curr = search_fn(g)
         steps += 1
- 
+
     elapsed = time.perf_counter() - start
     return elapsed, steps
- 
- 
-def full_run_benchmark(sizes, repeats=3, seed=0, k_neighbors=None):
- 
+
+
+def full_run_benchmark(sizes, repeats=3, seed=0, k_neighbors=None, run_smart=True):
     results = {"n": [], "naive_time": [], "naive_steps": [], "smart_time": [], "smart_steps": []}
- 
+
     for n in sizes:
         print(f"Full-run benchmarking n={n} (k_neighbors={k_neighbors}) ...")
- 
+
         naive_times, naive_steps_list = [], []
         smart_times, smart_steps_list = [], []
- 
+
         for r in range(repeats):
             g_naive = make_random_graph(n, seed=seed + r, k_neighbors=k_neighbors)
             t, steps = run_to_completion(g_naive, use_smart=False)
             naive_times.append(t)
             naive_steps_list.append(steps)
- 
-            g_smart = make_random_graph(n, seed=seed + r, k_neighbors=k_neighbors)
-            t, steps = run_to_completion(g_smart, use_smart=True)
-            smart_times.append(t)
-            smart_steps_list.append(steps)
- 
+
+            if run_smart:
+                g_smart = make_random_graph(n, seed=seed + r, k_neighbors=k_neighbors)
+                t, steps = run_to_completion(g_smart, use_smart=True)
+                smart_times.append(t)
+                smart_steps_list.append(steps)
+
         results["n"].append(n)
         results["naive_time"].append(min(naive_times))
         results["naive_steps"].append(int(np.mean(naive_steps_list)))
-        results["smart_time"].append(min(smart_times))
-        results["smart_steps"].append(int(np.mean(smart_steps_list)))
- 
+
+        if run_smart:
+            results["smart_time"].append(min(smart_times))
+            results["smart_steps"].append(int(np.mean(smart_steps_list)))
+        else:
+            results["smart_time"].append(None)
+            results["smart_steps"].append(None)
+
         print(f"  naive: {min(naive_times)*1000:.2f} ms over {int(np.mean(naive_steps_list))} steps")
-        print(f"  smart: {min(smart_times)*1000:.2f} ms over {int(np.mean(smart_steps_list))} steps")
- 
+        if run_smart:
+            print(f"  smart: {min(smart_times)*1000:.2f} ms over {int(np.mean(smart_steps_list))} steps")
+
     return results
- 
- 
-def plot_full_run_results(results, out_path, k_neighbors=None):
+
+
+def plot_full_run_results(results, out_path, k_neighbors=None, run_smart=True):
 
     fig, ax = plt.subplots(figsize=(8, 5.5))
- 
+
     ax.plot(results["n"], np.array(results["naive_time"]) * 1000, marker="o", label="naive (full run)")
-    ax.plot(results["n"], np.array(results["smart_time"]) * 1000, marker="s", label="smart (full run)")
+    if run_smart:
+        ax.plot(results["n"], np.array(results["smart_time"]) * 1000, marker="s", label="smart (full run)")
     ax.loglog()
     ax.set_xlabel("Number of nodes (n)")
     ax.set_ylabel("Total time to full decimation (ms)")
     title_suffix = f" (k_neighbors={k_neighbors})" if k_neighbors is not None else " (dense)"
-    ax.set_title("Full-run time to completion: naive vs smart" + title_suffix)
+    ax.set_title("Full-run time to completion: naive" + (" vs smart" if run_smart else "") + title_suffix)
     ax.legend()
     ax.grid(True, alpha=0.3)
- 
+
     fig.tight_layout()
     fig.savefig(out_path, dpi=150)
     print(f"\nSaved plot to {out_path}")
+ 
 
 output_dir = os.path.join(os.path.dirname(__file__), '..', 'tests', 'test-plots')
 
@@ -241,9 +250,9 @@ full_sparse = full_run_benchmark([10, 25, 50, 100, 200, 300, 400, 1000], k_neigh
 plot_full_run_results(full_sparse, os.path.join(output_dir, "full_run_k=10_v2.png"), k_neighbors=10)
 '''
 
-full_dense = full_run_benchmark([10, 25, 50, 100, 200, 300, 400, 1000], k_neighbors=None)
-plot_full_run_results(full_dense, os.path.join(output_dir, "full_run_dense_v2.png"), k_neighbors=None)
-
+# full_dense = full_run_benchmark([10, 100, 100, 1000, 10000], k_neighbors=None, run_smart=False)
+# plot_full_run_results(full_dense, os.path.join(output_dir, "full_run_dense_v2.png"), k_neighbors=None, run_smart=False)
+'''
 full_sparse1 = full_run_benchmark([10, 25, 50, 100, 200, 300, 400, 1000], k_neighbors=5)
 plot_full_run_results(full_sparse1, os.path.join(output_dir, "full_run_k=5_v2.png"), k_neighbors=10)
  
@@ -255,3 +264,4 @@ plot_full_run_results(full_sparse3, os.path.join(output_dir, "full_run_k=25_v2.p
 
 full_sparse2 = full_run_benchmark([10, 25, 50, 100, 200, 300, 400, 1000], k_neighbors=50)
 plot_full_run_results(full_sparse2, os.path.join(output_dir, "full_run_k=50_v2.png"), k_neighbors=50)
+'''

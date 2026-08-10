@@ -1,6 +1,9 @@
 
 import heapq
 from collections import deque
+import numpy as np
+
+from src.structures import graph_decimate_kernel
 
 def get_adj_list(graph):
     
@@ -133,6 +136,7 @@ def smart_search_v2(graph, seeds=None):
         heap = [(0.0, i)]
         visited = set()
         found = None
+        can_reach_anyone = False
 
         while heap:
             d, node = heapq.heappop(heap)
@@ -140,9 +144,10 @@ def smart_search_v2(graph, seeds=None):
                 continue
             visited.add(node)
 
-            if node != i and node in active_set:
+            if node != i and node in active_set and d <= r_i:
+                can_reach_anyone = True 
                 r_node = graph.nodes[node].range
-                if d <= r_i and d <= r_node:
+                if d <= r_node:
                     found = (node, d)
                     break
 
@@ -157,10 +162,13 @@ def smart_search_v2(graph, seeds=None):
         if found is not None:
             j, delta = found
             return ('fuse', i, j, delta)
+        elif can_reach_anyone:
+            graph._pending.append(i)
+            continue
         else:
             return ('inactive', i)
 
-    return (None, None) 
+    return (None, None)
 
  
 def smart_decimate(graph, event):
@@ -228,3 +236,16 @@ def smart_decimate(graph, event):
         return [i]
  
     return []
+
+def adjlist_to_csr_arrays(adj_list, n):
+    rows, cols, weights = [], [], []
+    for i, neighbors in adj_list.items():
+        for j, w in neighbors.items():
+            rows.append(i)
+            cols.append(j)
+            weights.append(w)
+    return (
+        np.array(rows, dtype=np.int32),
+        np.array(cols, dtype=np.int32),
+        np.array(weights, dtype=np.float64),
+    )

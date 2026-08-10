@@ -8,7 +8,7 @@ import math
 import random
 from src.structures.graph import Graph
 from src.structures.graph import angular_sep
-# from src.structures import graph_decimate_kernel
+from src.structures import graph_decimate_kernel
 
 import numpy as np
 
@@ -23,10 +23,11 @@ def in_range(graph, u, v):
 
 def search_k(graph):
     n = graph.length
-    adj = np.ascontiguousarray(graph.adj[:n, :n], dtype=np.float64)
+    adj = np.asarray(graph.adj, dtype=np.float64)[:n, :n]
+    adj = np.ascontiguousarray(adj)
     ranges = np.array([graph.nodes[i].range for i in range(n)], dtype=np.float64)
     active = np.array([graph.nodes[i].active for i in range(n)], dtype=bool)
-    i, j = 0, 0 #graph_decimate_kernel.search_kernel(adj, ranges, active, n)
+    i, j = graph_decimate_kernel.search_kernel(adj, ranges, active, n)
     return (i, j)
 
 def search(graph):
@@ -257,6 +258,11 @@ def repair(graph, to_repair=None):
                     if graph.adj[t_i][j] == 0:
                         d = find_sep(graph, node_i, graph.nodes[j])
                         graph.add_edge(t_i, j, d)
+
+                        if hasattr(graph, "adj_list") and graph.adj_list is not None:
+                            graph.adj_list.setdefault(t_i, {})[j] = d
+                            graph.adj_list.setdefault(j, {})[t_i] = d
+
                         candidates.append(t_i)
                         candidates.append(j)
  

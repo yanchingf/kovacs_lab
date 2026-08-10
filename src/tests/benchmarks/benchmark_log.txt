@@ -345,3 +345,173 @@
 [2026-08-05T12:16:38] All benchmark results written to c:\Users\milan\Desktop\SURG_2026\src\tests\benchmarks\results.json
 [2026-08-05T12:16:38] === Benchmark run finished ===
 
+[2026-08-06T22:24:45] === Benchmark run started ===
+[2026-08-06T22:24:45] c_range=[1, 2, 3, 4, 5], patches=['Cnc', 'UMa', 'Psc'], variants=['naive', 'smart']
+[2026-08-06T22:24:45] Cnc: 112 stars found
+[2026-08-06T22:24:45] Running Cnc : c=1 : variant=naive (smart=False) : n=112
+[2026-08-06T22:25:07]   -> 20.677s, 103 clusters, max size 3
+[2026-08-06T22:25:07] Running Cnc : c=1 : variant=smart (smart=True) : n=112
+[2026-08-06T22:25:29]   -> 19.988s, 103 clusters, max size 3
+[2026-08-06T22:25:29] Running Cnc : c=2 : variant=naive (smart=False) : n=112
+[2026-08-06T22:25:51]   -> 20.304s, 86 clusters, max size 9
+[2026-08-06T22:25:51] Running Cnc : c=2 : variant=smart (smart=True) : n=112
+[2026-08-06T22:26:14]   -> 20.306s, 90 clusters, max size 5
+[2026-08-06T22:26:14] Running Cnc : c=3 : variant=naive (smart=False) : n=112
+[2026-08-06T22:26:36]   -> 20.180s, 62 clusters, max size 39
+[2026-08-06T22:26:36] Running Cnc : c=3 : variant=smart (smart=True) : n=112
+[2026-08-06T22:26:59]   -> 21.550s, 72 clusters, max size 8
+[2026-08-06T22:26:59] Running Cnc : c=4 : variant=naive (smart=False) : n=112
+[2026-08-06T22:27:23]   -> 21.545s, 46 clusters, max size 64
+[2026-08-06T22:27:23] Running Cnc : c=4 : variant=smart (smart=True) : n=112
+[2026-08-06T22:27:47]   -> 21.959s, 63 clusters, max size 9
+[2026-08-06T22:27:47] Running Cnc : c=5 : variant=naive (smart=False) : n=112
+[2026-08-06T22:28:10]   -> 21.734s, 38 clusters, max size 71
+[2026-08-06T22:28:10] Running Cnc : c=5 : variant=smart (smart=True) : n=112
+[2026-08-06T22:28:40]   -> 26.844s, 59 clusters, max size 6
+[2026-08-06T22:28:40] OK: Cnc c=1 — naive/smart final structure AND membership match (103 clusters, max size 3)
+[2026-08-06T22:28:40] WARNING: Cnc c=2 — naive and smart runs disagree on final cluster structure (86 vs 90 clusters, max size 9 vs 5, same membership: False)
+[2026-08-06T22:28:40] WARNING: Cnc c=3 — naive and smart runs disagree on final cluster structure (62 vs 72 clusters, max size 39 vs 8, same membership: False)
+[2026-08-06T22:28:40] WARNING: Cnc c=4 — naive and smart runs disagree on final cluster structure (46 vs 63 clusters, max size 64 vs 9, same membership: False)
+[2026-08-06T22:28:40] WARNING: Cnc c=5 — naive and smart runs disagree on final cluster structure (38 vs 59 clusters, max size 71 vs 6, same membership: False)
+[2026-08-06T22:28:40] Cnc timing summary:
+  c=1: naive=20.677s, smart=19.988s, speedup=1.03x
+  c=2: naive=20.304s, smart=20.306s, speedup=1.00x
+  c=3: naive=20.180s, smart=21.550s, speedup=0.94x
+  c=4: naive=21.545s, smart=21.959s, speedup=0.98x
+  c=5: naive=21.734s, smart=26.844s, speedup=0.81x
+[2026-08-06T22:28:40] Done: Cnc (5 c-values x 2 variants)
+[2026-08-06T22:28:40] UMa: 224 stars found
+[2026-08-06T22:28:40] Running UMa : c=1 : variant=naive (smart=False) : n=224
+[2026-08-06T22:30:02]   -> 77.840s, 203 clusters, max size 5
+[2026-08-06T22:30:02] Running UMa : c=1 : variant=smart (smart=True) : n=224
+[2026-08-06T22:31:20]   -> 75.070s, 204 clusters, max size 3
+[2026-08-06T22:31:20] Running UMa : c=2 : variant=naive (smart=False) : n=224
+[2026-08-06T22:32:45]   -> 81.260s, 147 clusters, max size 66
+[2026-08-06T22:32:45] Running UMa : c=2 : variant=smart (smart=True) : n=224
+[2026-08-06T22:34:58]   -> 129.301s, 166 clusters, max size 7
+[2026-08-06T22:34:58] Running UMa : c=3 : variant=naive (smart=False) : n=224
+[2026-08-06T22:37:02]   -> 116.224s, 117 clusters, max size 102
+[2026-08-06T22:37:02] Running UMa : c=3 : variant=smart (smart=True) : n=224
+[2026-08-06T22:38:24]   -> 79.141s, 144 clusters, max size 10
+[2026-08-06T22:38:24] Running UMa : c=4 : variant=naive (smart=False) : n=224
+[2026-08-06T22:39:40]   -> 72.775s, 93 clusters, max size 128
+[2026-08-06T22:39:40] Running UMa : c=4 : variant=smart (smart=True) : n=224
+[2026-08-06T22:41:15]   -> 90.588s, 126 clusters, max size 10
+[2026-08-06T22:41:15] Running UMa : c=5 : variant=naive (smart=False) : n=224
+[2026-08-06T22:42:41]   -> 81.599s, 81 clusters, max size 143
+[2026-08-06T22:42:41] Running UMa : c=5 : variant=smart (smart=True) : n=224
+[2026-08-06T22:44:33]   -> 108.070s, 118 clusters, max size 10
+[2026-08-06T22:44:33] WARNING: UMa c=1 — naive and smart runs disagree on final cluster structure (203 vs 204 clusters, max size 5 vs 3, same membership: False)
+[2026-08-06T22:44:33] WARNING: UMa c=2 — naive and smart runs disagree on final cluster structure (147 vs 166 clusters, max size 66 vs 7, same membership: False)
+[2026-08-06T22:44:33] WARNING: UMa c=3 — naive and smart runs disagree on final cluster structure (117 vs 144 clusters, max size 102 vs 10, same membership: False)
+[2026-08-06T22:44:33] WARNING: UMa c=4 — naive and smart runs disagree on final cluster structure (93 vs 126 clusters, max size 128 vs 10, same membership: False)
+[2026-08-06T22:44:33] WARNING: UMa c=5 — naive and smart runs disagree on final cluster structure (81 vs 118 clusters, max size 143 vs 10, same membership: False)
+[2026-08-06T22:44:33] UMa timing summary:
+  c=1: naive=77.840s, smart=75.070s, speedup=1.04x
+  c=2: naive=81.260s, smart=129.301s, speedup=0.63x
+  c=3: naive=116.224s, smart=79.141s, speedup=1.47x
+  c=4: naive=72.775s, smart=90.588s, speedup=0.80x
+  c=5: naive=81.599s, smart=108.070s, speedup=0.76x
+[2026-08-06T22:44:33] Done: UMa (5 c-values x 2 variants)
+[2026-08-06T22:44:33] Psc: 141 stars found
+[2026-08-06T22:44:33] Running Psc : c=1 : variant=naive (smart=False) : n=141
+[2026-08-06T22:45:07]   -> 31.082s, 127 clusters, max size 4
+[2026-08-06T22:45:07] Running Psc : c=1 : variant=smart (smart=True) : n=141
+[2026-08-06T22:45:41]   -> 32.017s, 128 clusters, max size 4
+[2026-08-06T22:45:41] Running Psc : c=2 : variant=naive (smart=False) : n=141
+[2026-08-06T22:46:22]   -> 38.031s, 89 clusters, max size 18
+[2026-08-06T22:46:22] Running Psc : c=2 : variant=smart (smart=True) : n=141
+[2026-08-06T22:46:58]   -> 33.214s, 100 clusters, max size 6
+[2026-08-06T22:46:58] Running Psc : c=3 : variant=naive (smart=False) : n=141
+[2026-08-06T22:47:34]   -> 33.337s, 58 clusters, max size 80
+[2026-08-06T22:47:34] Running Psc : c=3 : variant=smart (smart=True) : n=141
+[2026-08-06T22:48:12]   -> 35.543s, 77 clusters, max size 8
+[2026-08-06T22:48:12] Running Psc : c=4 : variant=naive (smart=False) : n=141
+[2026-08-06T22:48:50]   -> 35.207s, 45 clusters, max size 96
+[2026-08-06T22:48:50] Running Psc : c=4 : variant=smart (smart=True) : n=141
+[2026-08-06T22:49:30]   -> 36.549s, 68 clusters, max size 9
+[2026-08-06T22:49:30] Running Psc : c=5 : variant=naive (smart=False) : n=141
+[2026-08-06T22:50:03]   -> 31.425s, 37 clusters, max size 104
+[2026-08-06T22:50:03] Running Psc : c=5 : variant=smart (smart=True) : n=141
+[2026-08-06T22:50:47]   -> 40.809s, 61 clusters, max size 9
+[2026-08-06T22:50:47] WARNING: Psc c=1 — naive and smart runs disagree on final cluster structure (127 vs 128 clusters, max size 4 vs 4, same membership: False)
+[2026-08-06T22:50:47] WARNING: Psc c=2 — naive and smart runs disagree on final cluster structure (89 vs 100 clusters, max size 18 vs 6, same membership: False)
+[2026-08-06T22:50:47] WARNING: Psc c=3 — naive and smart runs disagree on final cluster structure (58 vs 77 clusters, max size 80 vs 8, same membership: False)
+[2026-08-06T22:50:47] WARNING: Psc c=4 — naive and smart runs disagree on final cluster structure (45 vs 68 clusters, max size 96 vs 9, same membership: False)
+[2026-08-06T22:50:47] WARNING: Psc c=5 — naive and smart runs disagree on final cluster structure (37 vs 61 clusters, max size 104 vs 9, same membership: False)
+[2026-08-06T22:50:47] Psc timing summary:
+  c=1: naive=31.082s, smart=32.017s, speedup=0.97x
+  c=2: naive=38.031s, smart=33.214s, speedup=1.15x
+  c=3: naive=33.337s, smart=35.543s, speedup=0.94x
+  c=4: naive=35.207s, smart=36.549s, speedup=0.96x
+  c=5: naive=31.425s, smart=40.809s, speedup=0.77x
+[2026-08-06T22:50:47] Done: Psc (5 c-values x 2 variants)
+[2026-08-06T22:50:47] All benchmark results written to c:\Users\milan\Desktop\SURG_2026\src\tests\benchmarks\results.json
+[2026-08-06T22:50:47] === Benchmark run finished ===
+
+[2026-08-09T14:42:33] === Benchmark run started ===
+[2026-08-09T14:42:33] c_range=[1, 2, 3, 4, 5], patches=['Cnc', 'UMa', 'Psc'], variants=['naive', 'smart']
+[2026-08-09T14:42:33] Cnc: 112 stars found
+[2026-08-09T14:42:33] Running Cnc : c=1 : variant=naive (smart=False) : n=112
+[2026-08-09T14:43:11]   -> 33.650s, 103 clusters, max size 3
+[2026-08-09T14:43:11] Running Cnc : c=1 : variant=smart (smart=True) : n=112
+[2026-08-09T14:43:59]   -> 41.953s, 103 clusters, max size 3
+[2026-08-09T14:43:59] Running Cnc : c=2 : variant=naive (smart=False) : n=112
+[2026-08-09T14:44:51]   -> 46.711s, 86 clusters, max size 9
+[2026-08-09T14:44:51] Running Cnc : c=2 : variant=smart (smart=True) : n=112
+[2026-08-09T14:45:31]   -> 37.022s, 89 clusters, max size 6
+[2026-08-09T14:45:31] Running Cnc : c=3 : variant=naive (smart=False) : n=112
+[2026-08-09T14:46:10]   -> 36.205s, 62 clusters, max size 39
+[2026-08-09T14:46:10] Running Cnc : c=3 : variant=smart (smart=True) : n=112
+[2026-08-09T18:00:54] === Benchmark run started ===
+[2026-08-09T18:00:54] c_range=[1, 2, 3, 4, 5], patches=['Cnc', 'UMa', 'Psc'], variants=['naive', 'smart']
+[2026-08-09T18:00:54] Cnc: 112 stars found
+[2026-08-09T18:00:54] Running Cnc : c=1 : variant=naive (smart=False) : n=112
+[2026-08-09T18:01:20]   -> 23.469s, 103 clusters, max size 3
+[2026-08-09T18:01:20] Running Cnc : c=1 : variant=smart (smart=True) : n=112
+[2026-08-09T18:01:44]   -> 21.942s, 103 clusters, max size 3
+[2026-08-09T18:01:44] Running Cnc : c=2 : variant=naive (smart=False) : n=112
+[2026-08-09T18:02:08]   -> 22.025s, 86 clusters, max size 9
+[2026-08-09T18:02:08] Running Cnc : c=2 : variant=smart (smart=True) : n=112
+[2026-08-09T18:02:32]   -> 22.366s, 89 clusters, max size 6
+[2026-08-09T18:02:32] Running Cnc : c=3 : variant=naive (smart=False) : n=112
+[2026-08-09T18:02:57]   -> 22.432s, 62 clusters, max size 39
+[2026-08-09T18:02:57] Running Cnc : c=3 : variant=smart (smart=True) : n=112
+[2026-08-09T18:08:10] === Benchmark run started ===
+[2026-08-09T18:08:10] c_range=[1, 2, 3, 4, 5], patches=['Cnc', 'UMa', 'Psc'], variants=['naive', 'smart']
+[2026-08-09T18:08:10] Cnc: 112 stars found
+[2026-08-09T18:08:10] Running Cnc : c=1 : variant=naive (smart=False) : n=112
+[2026-08-09T18:08:37]   -> finished in 27.150s
+[2026-08-09T18:08:41]   -> 27.150s, 103 clusters, max size 3
+[2026-08-09T18:08:41] Running Cnc : c=1 : variant=smart (smart=True) : n=112
+[2026-08-09T18:09:10]   -> finished in 28.647s
+[2026-08-09T18:09:13]   -> 28.647s, 103 clusters, max size 3
+[2026-08-09T18:09:13] Running Cnc : c=2 : variant=naive (smart=False) : n=112
+[2026-08-09T18:09:43]   -> finished in 29.947s
+[2026-08-09T18:09:45]   -> 29.947s, 86 clusters, max size 9
+[2026-08-09T18:09:45] Running Cnc : c=2 : variant=smart (smart=True) : n=112
+[2026-08-09T18:10:12]   -> finished in 26.451s
+[2026-08-09T18:10:14]   -> 26.451s, 89 clusters, max size 6
+[2026-08-09T18:10:14] Running Cnc : c=3 : variant=naive (smart=False) : n=112
+[2026-08-09T18:10:39]   -> finished in 25.242s
+[2026-08-09T18:10:41]   -> 25.242s, 62 clusters, max size 39
+[2026-08-09T18:10:41] Running Cnc : c=3 : variant=smart (smart=True) : n=112
+[2026-08-09T19:23:46] === Benchmark run started ===
+[2026-08-09T19:23:46] c_range=[1, 2, 3, 4, 5], patches=['Cnc', 'UMa', 'Psc'], variants=['naive', 'smart']
+[2026-08-09T19:23:46] Cnc: 112 stars found
+[2026-08-09T19:23:46] Running Cnc : c=1 : variant=naive (smart=False) : n=112
+[2026-08-09T19:23:51]   -> finished in 4.956s
+[2026-08-09T19:23:53]   -> 4.956s, 103 clusters, max size 3
+[2026-08-09T19:23:53] Running Cnc : c=1 : variant=smart (smart=True) : n=112
+[2026-08-09T19:23:58]   -> finished in 4.494s
+[2026-08-09T19:24:00]   -> 4.494s, 103 clusters, max size 3
+[2026-08-09T19:24:00] Running Cnc : c=2 : variant=naive (smart=False) : n=112
+[2026-08-09T19:24:05]   -> finished in 5.093s
+[2026-08-09T19:24:07]   -> 5.093s, 86 clusters, max size 9
+[2026-08-09T19:24:07] Running Cnc : c=2 : variant=smart (smart=True) : n=112
+[2026-08-09T19:24:13]   -> finished in 6.270s
+[2026-08-09T19:24:16]   -> 6.270s, 89 clusters, max size 6
+[2026-08-09T19:24:16] Running Cnc : c=3 : variant=naive (smart=False) : n=112
+[2026-08-09T19:24:23]   -> finished in 6.926s
+[2026-08-09T19:24:25]   -> 6.926s, 62 clusters, max size 39
+[2026-08-09T19:24:25] Running Cnc : c=3 : variant=smart (smart=True) : n=112

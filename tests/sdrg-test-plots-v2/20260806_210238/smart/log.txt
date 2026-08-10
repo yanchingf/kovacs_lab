@@ -1,0 +1,10 @@
+Step 0 | Ω=initial
+    id=0 h=10.0 cluster=0 active=True
+    id=1 h=10.0 cluster=1 active=True
+Step 1 | Ω=('inactive', 0)
+    id=0 h=10.0 cluster=0 active=True
+    id=1 h=10.0 cluster=1 active=True
+Step 2 | Ω=('inactive', 1)
+    id=0 h=10.0 cluster=0 active=False
+    id=1 h=10.0 cluster=1 active=True
+Done at iteration 3, plots saved to 'c:\Users\milan\Desktop\SURG_2026\src\..\tests\sdrg-test-plots-v2\20260806_210238\smart/'

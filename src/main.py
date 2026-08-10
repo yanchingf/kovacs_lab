@@ -16,7 +16,7 @@ from stars import final_visualization
 data = get_all_star_data()
 
 c_lower_lim = 1
-c_upper_lim = 1
+c_upper_lim = 3
 c_range = list(range(c_lower_lim, c_upper_lim + 1))
 
 patch_names = ["Cnc"]
@@ -63,8 +63,8 @@ for patch_name in patch_names:
             skycoords=skycoords,
             patch_name=patch_name,
             output_dir=c_dir,
-            plot_every=10,
-            k_neighbors=1)
+            plot_every=1000000, 
+            smart=False) 
 
         plot_star_map(skycoords, g, iteration="final", output_dir=c_dir)
         final_visualization(g, skycoords, patch_name, c_dir)

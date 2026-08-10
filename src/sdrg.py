@@ -16,7 +16,7 @@ from structures.graph_decimate import filter_bond
 from structures.graph_decimate import search
 from structures.graph_decimate import in_range
 from structures.graph_decimate import repair
-from structures.smart_decimate import smart_search, smart_decimate
+from structures.smart_decimate import smart_search, smart_search_v2, smart_decimate
 
 from src.data_handling.random_test import generate_random_graph
 from src.stars import plot_star_map
@@ -94,7 +94,7 @@ def run_sdrg(n=1, neg_x_lim=0, x_lim=5000, neg_y_lim=0, y_lim=5000, random=True,
         points = (inp[0], inp[1])
         n = len(inp[0])
  
-    search_fn = smart_search if smart else search
+    search_fn = smart_search_v2 if smart else search
  
     iteration = 1
  
@@ -277,7 +277,7 @@ def run_tests(compare_smart=True):
  
         for variant_name, smart_flag in variants:
  
-            out_dir = os.path.join(os.path.dirname(__file__), '..', 'tests', 'sdrg-test-plots',
+            out_dir = os.path.join(os.path.dirname(__file__), '..', 'tests', 'sdrg-test-plots-v2',
                                     datetime.now().strftime("%Y%m%d_%H%M%S"))
 
             if compare_smart:
@@ -288,4 +288,4 @@ def run_tests(compare_smart=True):
  
             run_sdrg(n, 0, 500, 0, 500, False, (x, y, r), output_dir=out_dir, use_sky_coords=False, smart=smart_flag)
  
-run_tests(compare_smart=True)
+# run_tests(compare_smart=True)

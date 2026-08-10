@@ -1,0 +1,37 @@
+Step 0 | Ω=initial
+    id=0 h=220.0 cluster=0 active=True
+    id=1 h=220.0 cluster=1 active=True
+    id=2 h=220.0 cluster=2 active=True
+    id=3 h=220.0 cluster=3 active=True
+    id=4 h=220.0 cluster=4 active=True
+Step 1 | Ω=(0, 1)
+    id=0 h=220.0 cluster=0 active=True
+    id=1 h=220.0 cluster=1 active=True
+    id=2 h=220.0 cluster=2 active=True
+    id=3 h=220.0 cluster=3 active=True
+    id=4 h=220.0 cluster=4 active=True
+Step 2 | Ω=(0, 2)
+    id=0 h=240.0 cluster=0 active=True
+    id=1 h=240.0 cluster=0 active=False
+    id=2 h=220.0 cluster=2 active=True
+    id=3 h=220.0 cluster=3 active=True
+    id=4 h=220.0 cluster=4 active=True
+Step 3 | Ω=(3, 4)
+    id=0 h=410.0 cluster=0 active=True
+    id=1 h=240.0 cluster=0 active=False
+    id=2 h=410.0 cluster=0 active=False
+    id=3 h=220.0 cluster=3 active=True
+    id=4 h=220.0 cluster=4 active=True
+Step 4 | Ω=(0, None)
+    id=0 h=410.0 cluster=0 active=True
+    id=1 h=240.0 cluster=0 active=False
+    id=2 h=410.0 cluster=0 active=False
+    id=3 h=290.0 cluster=3 active=True
+    id=4 h=290.0 cluster=3 active=False
+Step 5 | Ω=(3, None)
+    id=0 h=410.0 cluster=0 active=False
+    id=1 h=240.0 cluster=0 active=False
+    id=2 h=410.0 cluster=0 active=False
+    id=3 h=290.0 cluster=3 active=True
+    id=4 h=290.0 cluster=3 active=False
+Done at iteration 6, plots saved to 'c:\Users\milan\Desktop\SURG_2026\src\..\tests\sdrg-test-plots-v2\20260806_210343\naive/'

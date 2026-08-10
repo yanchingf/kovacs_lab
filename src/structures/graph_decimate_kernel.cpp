@@ -3,6 +3,11 @@
 #include <pybind11/numpy.h>
 #include <omp.h>
 #include <vector>
+#include <queue>
+#include <unordered_set>
+#include <deque>
+#include <tuple>
+#include <limits>
 
 namespace py = pybind11;
 
