@@ -1,96 +1,160 @@
 
-
 import sys
 import os
+import argparse
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 
 import numpy as np
 import matplotlib.pyplot as plt
 from collections import Counter
-from data_handling.star_io import get_all_star_data, get_patch, get_coords_and_brightness
 from datetime import datetime
+
+from astropy.coordinates import get_constellation
+
+from data_handling.star_io import get_all_star_data, get_patch, get_coords_and_brightness
 from sdrg import run_sdrg
+from stars import plot_star_map, final_visualization
 
-from stars import plot_star_map
-from stars import final_visualization
+try:
+    from sklearn.metrics import adjusted_rand_score
+    HAVE_SKLEARN_METRICS = True
+except ImportError:
+    HAVE_SKLEARN_METRICS = False
+    print("WARNING: sklearn not available -- skipping adjusted Rand index, "
+          "will only report cluster purity vs ground truth.")
 
-data = get_all_star_data()
 
-c_lower_lim = 1
-c_upper_lim = 1
-c_range = list(range(c_lower_lim, c_upper_lim + 1))
+def ground_truth_labels(skycoords, short_name=True):
+    names = get_constellation(skycoords, short_name=short_name)
+    return np.array(names)
 
-patch_names = ["Cnc"]
 
-output_dir = os.path.join(os.path.dirname(__file__), 'tests', 'runs')
-os.makedirs(output_dir, exist_ok=True)
+def cluster_purity(pred_labels, true_labels):
+    total = len(true_labels)
+    correct = 0
+    for cluster_id in np.unique(pred_labels):
+        mask = pred_labels == cluster_id
+        true_in_cluster = true_labels[mask]
+        if len(true_in_cluster) == 0:
+            continue
+        majority_count = Counter(true_in_cluster).most_common(1)[0][1]
+        correct += majority_count
+    return correct / total if total > 0 else 0.0
 
-for patch_name in patch_names:
 
+def main():
+    parser = argparse.ArgumentParser(description="Run naive SDRG on a single constellation patch for one c value.")
+    parser.add_argument("--c", type=int, default=1, help="Brightness scaling constant")
+    parser.add_argument("--patch", type=str, default="Cnc", help="Constellation short name, e.g. Cnc, UMa, Psc")
+    parser.add_argument("--output-dir", type=str, default=None,
+                         help="Output directory (default: tests/runs/<patch>/<timestamp>/c_<c>)")
+    args = parser.parse_args()
+
+    c = args.c
+    patch_name = args.patch
+
+    data = get_all_star_data()
     patch_df = get_patch(data, patch_name)
 
     if patch_df.shape[0] < 2:
-        print(f"{patch_name}: not enough stars")
-        continue
+        print(f"{patch_name}: not enough stars ({patch_df.shape[0]} found), aborting")
+        return
+
+    print(f"{patch_name}: {len(patch_df)} stars found")
+
+    base_output_dir = os.path.join(os.path.dirname(__file__), 'tests', 'runs')
+    os.makedirs(base_output_dir, exist_ok=True)
+
+    if args.output_dir is not None:
+        c_dir = args.output_dir
     else:
-        print(f"{patch_name}: {len(patch_df)} stars found")
+        run_dir = os.path.join(base_output_dir, patch_name, datetime.now().strftime("%Y%m%d_%H%M%S"))
+        c_dir = os.path.join(run_dir, f"c_{c}")
+    os.makedirs(c_dir, exist_ok=True)
 
-    patch_dir = os.path.join(output_dir, patch_name, datetime.now().strftime("%Y%m%d_%H%M%S"))
-    os.makedirs(patch_dir, exist_ok=True)
+    print(f"Running {patch_name} : c={c} (naive)")
 
-    num_clusters_by_c = []
-    max_cluster_size_by_c = []
-    size_dist_by_c = {}
+    coords, brightness, skycoords = get_coords_and_brightness(patch_df, c=c)
+    x, y = coords[:, 0], coords[:, 1]
 
-    for c in c_range:
+    true_labels = ground_truth_labels(skycoords)
 
-        print(f"Running {patch_name} : c={c}")
+    g = run_sdrg(
+        n=len(x),
+        neg_x_lim=0, x_lim=float(x.max()) + 1,
+        neg_y_lim=0, y_lim=float(y.max()) + 1,
+        random=False,
+        inp=(x, y, brightness),
+        percolation_stats=True,
+        skycoords=skycoords,
+        patch_name=patch_name,
+        output_dir=c_dir,
+        plot_every=100000000,
+        smart=False,
+    )
 
-        c_dir = os.path.join(patch_dir, f"c_{c}")
-        os.makedirs(c_dir, exist_ok=True)
+    plot_star_map(skycoords, g, iteration="final", output_dir=c_dir)
+    final_visualization(g, skycoords, patch_name, c_dir)
 
-        t = get_coords_and_brightness(patch_df, c=c)
-        coords, brightness, skycoords = t[0], t[1], t[2]
-        x = coords[:,0]
-        y = coords[:,1]
+    n = len(x)
+    pred_labels = np.array([g.nodes[i].cluster_id for i in range(n)])
 
-        g = run_sdrg(
-            n=len(x),
-            neg_x_lim=0, x_lim=float(x.max()) + 1,
-            neg_y_lim=0, y_lim=float(y.max()) + 1,
-            random=False,
-            inp=(x, y, brightness),
-            percolation_stats=True,
-            skycoords=skycoords,
-            patch_name=patch_name,
-            output_dir=c_dir,
-            plot_every=10,
-            k_neighbors=1)
+    sizes = [len(members) for members in g.group_ids.values()]
+    num_clusters = len(sizes)
+    max_cluster_size = max(sizes) if sizes else 0
 
-        plot_star_map(skycoords, g, iteration="final", output_dir=c_dir)
-        final_visualization(g, skycoords, patch_name, c_dir)
+    purity = cluster_purity(pred_labels, true_labels)
 
-        cluster_sizes = Counter()
-        for members in g.group_ids.values():
-            cluster_sizes[len(members)] += 1 
+    result_line = f"{patch_name} c={c}: {num_clusters} clusters, max size {max_cluster_size}, purity={purity:.3f}"
 
-        sizes = [len(members) for members in g.group_ids.values()]
-        num_clusters_by_c.append(len(sizes))
-        max_cluster_size_by_c.append(max(sizes) if sizes else 0)
-        size_dist_by_c[c] = sizes
+    if HAVE_SKLEARN_METRICS:
+        ari = adjusted_rand_score(true_labels, pred_labels)
+        result_line += f", ARI={ari:.3f}"
+    else:
+        ari = None
 
-    fig, ax = plt.subplots()
-    ax.plot(c_range, num_clusters_by_c, marker='o')
-    ax.set_xlabel("c"); ax.set_ylabel("Final number of clusters")
-    ax.set_title(f"{patch_name}: num clusters vs c")
-    fig.savefig(os.path.join(patch_dir, "num_clusters_vs_c.png"))
-    plt.close(fig)
+    print(result_line)
 
-    fig, ax = plt.subplots()
-    ax.plot(c_range, max_cluster_size_by_c, marker='o', color='darkorange')
-    ax.set_xlabel("c"); ax.set_ylabel("Final max cluster size")
-    ax.set_title(f"{patch_name}: max cluster size vs c")
-    fig.savefig(os.path.join(patch_dir, "max_cluster_size_vs_c.png"))
-    plt.close(fig)
+    summary_path = os.path.join(c_dir, "summary.txt")
+    with open(summary_path, "w") as f:
+        f.write(result_line + "\n")
+        f.write(f"patch={patch_name}\n")
+        f.write(f"n_stars={len(x)}\n")
+        f.write(f"num_clusters={num_clusters}\n")
+        f.write(f"max_cluster_size={max_cluster_size}\n")
+        f.write(f"purity={purity}\n")
+        if ari is not None:
+            f.write(f"adjusted_rand_index={ari}\n")
 
-    print(f"Done: {patch_name} ({len(c_range)} runs)")
+    import json
+
+    star_clusters_path = os.path.join(c_dir, "star_clusters.json")
+    hr_ids = patch_df["HR"].tolist()
+    star_clusters = {
+        str(hr_ids[i]): {
+            "cluster_id": int(g.nodes[i].cluster_id),
+            "true_constellation": str(true_labels[i]),
+        }
+        for i in range(n)
+    }
+    with open(star_clusters_path, "w") as f:
+        json.dump(star_clusters, f, indent=2)
+
+    stats_path = os.path.join(c_dir, "stats.json")
+    with open(stats_path, "w") as f:
+        json.dump({
+            "patch": patch_name,
+            "c": c,
+            "n_stars": len(x),
+            "num_clusters": num_clusters,
+            "max_cluster_size": max_cluster_size,
+            "purity": purity,
+            "adjusted_rand_index": ari,
+            "cluster_sizes": sizes,
+        }, f, indent=2)
+
+    print(f"Done: {patch_name} c={c}, results in {c_dir}")
+
+
+if __name__ == "__main__":
+    main()
