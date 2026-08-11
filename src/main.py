@@ -25,7 +25,7 @@ except ImportError:
 
 
 def ground_truth_labels(skycoords, short_name=True):
-   
+
     names = get_constellation(skycoords, short_name=short_name)
     return np.array(names)
 
