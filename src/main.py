@@ -25,7 +25,7 @@ except ImportError:
 
 
 def ground_truth_labels(skycoords, short_name=True):
-
+    
     names = get_constellation(skycoords, short_name=short_name)
     return np.array(names)
 
@@ -113,6 +113,7 @@ def main():
 
     print(result_line)
 
+
     summary_path = os.path.join(c_dir, "summary.txt")
     with open(summary_path, "w") as f:
         f.write(result_line + "\n")
@@ -122,6 +123,32 @@ def main():
         f.write(f"purity={purity}\n")
         if ari is not None:
             f.write(f"adjusted_rand_index={ari}\n")
+
+    import json
+
+    star_clusters_path = os.path.join(c_dir, "star_clusters.json")
+    hr_ids = data["HR"].tolist()
+    star_clusters = {
+        str(hr_ids[i]): {
+            "cluster_id": int(g.nodes[i].cluster_id),
+            "true_constellation": str(true_labels[i]),
+        }
+        for i in range(n)
+    }
+    with open(star_clusters_path, "w") as f:
+        json.dump(star_clusters, f, indent=2)
+
+    stats_path = os.path.join(c_dir, "stats.json")
+    with open(stats_path, "w") as f:
+        json.dump({
+            "c": c,
+            "n_stars": len(x),
+            "num_clusters": num_clusters,
+            "max_cluster_size": max_cluster_size,
+            "purity": purity,
+            "adjusted_rand_index": ari,
+            "cluster_sizes": sizes,
+        }, f, indent=2)
 
     print(f"Done: c={c}, results in {c_dir}")
 
