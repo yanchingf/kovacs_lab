@@ -1,6 +1,4 @@
 
-
-
 set -e  # stop on first error
  
 echo "=== Loading modules ==="
