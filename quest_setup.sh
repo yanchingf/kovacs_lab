@@ -6,7 +6,7 @@ set -e  # stop on first error
 echo "=== Loading modules ==="
 module purge
 module load python-miniconda3/4.12.0
-module load gcc/8.4.0
+module load gcc/11.2.0
  
 echo "=== Creating virtual environment ==="
 python -m venv venv
