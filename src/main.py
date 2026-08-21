@@ -15,6 +15,8 @@ from data_handling.star_io import get_all_star_data, get_coords_and_brightness
 from sdrg import run_sdrg
 from stars import plot_star_map, final_visualization
 
+import json
+
 try:
     from sklearn.metrics import adjusted_rand_score
     HAVE_SKLEARN_METRICS = True
@@ -113,7 +115,6 @@ def main():
 
     print(result_line)
 
-
     summary_path = os.path.join(c_dir, "summary.txt")
     with open(summary_path, "w") as f:
         f.write(result_line + "\n")
@@ -123,8 +124,6 @@ def main():
         f.write(f"purity={purity}\n")
         if ari is not None:
             f.write(f"adjusted_rand_index={ari}\n")
-
-    import json
 
     star_clusters_path = os.path.join(c_dir, "star_clusters.json")
     hr_ids = data["HR"].tolist()
