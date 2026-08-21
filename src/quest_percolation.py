@@ -11,6 +11,7 @@ import numpy as np
 import colorcet as cc
 import holoviews
 
+
 def load_stats(patch_dir):
     records = []
     for stats_path in sorted(glob.glob(os.path.join(patch_dir, "c_*", "stats.json"))):
@@ -148,7 +149,8 @@ def final_sky_visualization(quest_dir, c=1.4, patch=False, patch_name="Ori"):
             )
     
             fig_zoom, ax_zoom = plt.subplots(figsize=(8, 6))
-            ax_zoom.scatter(ra[zoom_mask], dec[zoom_mask], c=colors[zoom_mask], s=20, zorder=3)
+            ax_zoom.scatter(ra[zoom_mask], dec[zoom_mask], c=colors[zoom_mask],
+                         s=(np.log(brightness[zoom_mask]))*8, zorder=3)
     
             ax_zoom.plot(
                 [box_ra_min, box_ra_max, box_ra_max, box_ra_min, box_ra_min],
@@ -172,7 +174,10 @@ def final_sky_visualization(quest_dir, c=1.4, patch=False, patch_name="Ori"):
         fig.savefig(os.path.join(c_dir, "final_clusters.png"))
         plt.close(fig)
 
+c = [0.0, 1.0, 1.2, 1.25, 1.3, 1.35, 1.4, 1.45, 1.50, 1.55, 1.6, 2.0, 3.0, 4.0, 5.0]
 
 quest_dir = "data/processed_data/QUEST"
 plot_full_sky(quest_dir, label="QUEST")
-final_sky_visualization(quest_dir, patch=True, patch_name="Ori", c=1.55)
+
+for i in c:
+    final_sky_visualization(quest_dir, patch=True, patch_name="UMa", c=i)
